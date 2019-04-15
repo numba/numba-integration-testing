@@ -127,6 +127,7 @@ class HpatTests(object):
     def install(self):
         conda_install(project.name, "-c ehsantn -c conda-forge hpat")
         os.environ["HDF5_DIR"] = MINCONDA_FULL_PATH
+        os.environ["CONDA_PREFIX"] = conda_environments()["hpat"]
         execute("python setup.py develop")
 
     def run_tests(self):
