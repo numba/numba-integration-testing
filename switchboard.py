@@ -142,7 +142,7 @@ if __name__ == "__main__":
         install_miniconda(MINCONDA_FULL_PATH)
     inject_conda_path(MINCONDA_BIN_PATH)
     conda_update_conda()
-    for project in [UmapTests() HpatTests()]:
+    for project in [UmapTests(), HpatTests()]:
         if not os.path.exists(project.name):
             git_clone(project.clone_url)
         os.chdir(project.name)
