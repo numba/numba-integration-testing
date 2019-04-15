@@ -24,7 +24,7 @@ def execute(command):
 def conda_url():
     uname = execute('uname').strip().decode('utf-8')
     if uname == "Linux":
-        filename = MINCONDA_FILE_TEMPLATE.format(LINUX_X86)
+        filename = MINCONDA_FILE_TEMPLATE.format(LINUX_X86_64)
     elif uname == "Darwin":
         filename = MINCONDA_FILE_TEMPLATE.format(MACOSX_X86_64)
     else:
