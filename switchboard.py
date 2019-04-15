@@ -21,11 +21,13 @@ def execute(command):
     return subprocess.check_output(shlex.split(command))
 
 
+UNAME = execute('uname').strip().decode('utf-8')
+
+
 def conda_url():
-    uname = execute('uname').strip().decode('utf-8')
-    if uname == "Linux":
+    if UNAME == "Linux":
         filename = MINCONDA_FILE_TEMPLATE.format(LINUX_X86_64)
-    elif uname == "Darwin":
+    elif UNAME == "Darwin":
         filename = MINCONDA_FILE_TEMPLATE.format(MACOSX_X86_64)
     else:
         raise ValueError("Unsupported OS")
@@ -125,9 +127,12 @@ class HpatTests(object):
         return ["pyspark openjdk numpy scipy pandas boost cmake pyarrow",
                 "-c conda-forge mpich mpi",
                 "-c ehsantn h5py",
-               ]
+                ]
 
     def install(self):
+        if UNAME == "Linux":
+            conda_install(self.name,
+                          "gcc_linux-64 gxx_linux-64 gfortran_linux-64")
         os.environ["HDF5_DIR"] = MINCONDA_FULL_PATH
         os.environ["CONDA_PREFIX"] = conda_environments()["hpat"]
         execute("python setup.py develop")
