@@ -62,7 +62,7 @@ def git_checkout(tag):
 
 
 def conda_update_conda():
-    execute("conda update -n base -c defaults conda")
+    execute("conda update -y -n base -c defaults conda")
 
 
 def conda_environments():
