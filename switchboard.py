@@ -107,7 +107,35 @@ class UmapTests(object):
         execute("nosetests -s umap")
 
 
+class HpatTests(object):
+
+    @property
+    def name(self):
+        return "hpat"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/IntelLabs/hpat"
+
+    @property
+    def target_tag(self):
+        return "0.29.2"
+
+    @property
+    def conda_dependencies(self):
+        return ["pyspark openjdk", "-c ehsantn h5py"]
+
+    def install(self):
+        conda_install(project.name, "-c ehsantn -c conda-forge hpat")
+        execute("HDF5_DIR={} python setup.py develop".format(MINCONDA_FULL_PATH))
+
+    def run_tests(self):
+        execute("python hpat/tests/gen_test_data.py")
+        execute("python -m unittest")
+
+
 if __name__ == "__main__":
+    basedir = os.getcwd()
     url = conda_url()
     if not os.path.exists(MINCONDA_INSTALLER):
         wget_conda(url)
@@ -115,11 +143,11 @@ if __name__ == "__main__":
         install_miniconda(MINCONDA_FULL_PATH)
     inject_conda_path(MINCONDA_BIN_PATH)
     conda_update_conda()
-    for project in [UmapTests()]:
+    for project in [UmapTests() HpatTests()]:
         if not os.path.exists(project.name):
             git_clone(project.clone_url)
-            os.chdir(project.name)
-            git_checkout(project.target_tag)
+        os.chdir(project.name)
+        git_checkout(project.target_tag)
         if project.name not in conda_environments():
             conda_create_env(project.name)
             conda_switch_environment(project.name)
@@ -128,3 +156,4 @@ if __name__ == "__main__":
                 conda_install(project.name, dep)
         project.install()
         project.run_tests()
+        os.chdir(basedir)
