@@ -50,7 +50,6 @@ def conda_switch_environment(env):
     env_bin_path = os.path.join(conda_environments()[env], "bin")
     new = [env_bin_path] + old[1:]
     os.environ["PATH"] = ":".join(new)
-    print(os.environ["PATH"])
 
 
 def git_clone(url):
