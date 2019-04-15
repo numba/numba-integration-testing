@@ -145,7 +145,7 @@ if __name__ == "__main__":
     if not os.path.exists(MINCONDA_FULL_PATH):
         install_miniconda(MINCONDA_FULL_PATH)
     inject_conda_path(MINCONDA_BIN_PATH)
-    #conda_update_conda()
+    conda_update_conda()
     for project in [HpatTests()]:
         if not os.path.exists(project.name):
             git_clone(project.clone_url)
