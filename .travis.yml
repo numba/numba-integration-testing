@@ -1,0 +1,5 @@
+sudo: false
+language: python
+cache: pip
+script:
+- python switchboard.py
