@@ -122,10 +122,12 @@ class HpatTests(object):
 
     @property
     def conda_dependencies(self):
-        return ["pyspark openjdk", "-c ehsantn h5py"]
+        return ["pyspark openjdk numpy scipy pandas boost cmake pyarrow",
+                "-c conda-forge mpich mpi",
+                "-c ehsantn h5py",
+               ]
 
     def install(self):
-        conda_install(project.name, "-c ehsantn -c conda-forge hpat")
         os.environ["HDF5_DIR"] = MINCONDA_FULL_PATH
         os.environ["CONDA_PREFIX"] = conda_environments()["hpat"]
         execute("python setup.py develop")
@@ -143,8 +145,8 @@ if __name__ == "__main__":
     if not os.path.exists(MINCONDA_FULL_PATH):
         install_miniconda(MINCONDA_FULL_PATH)
     inject_conda_path(MINCONDA_BIN_PATH)
-    conda_update_conda()
-    for project in [UmapTests(), HpatTests()]:
+    #conda_update_conda()
+    for project in [HpatTests()]:
         if not os.path.exists(project.name):
             git_clone(project.clone_url)
         os.chdir(project.name)
