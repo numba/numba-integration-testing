@@ -129,7 +129,7 @@ class HpatTests(object):
 
     def run_tests(self):
         execute("python -m hpat.tests.gen_test_data")
-        execute("python -m python -m hpat.runtests")
+        execute("python -m hpat.runtests")
 
 
 if __name__ == "__main__":
