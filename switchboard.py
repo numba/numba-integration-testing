@@ -115,14 +115,6 @@ class HpatTests(object):
         return "hpat"
 
     @property
-    def clone_url(self):
-        return "https://github.com/IntelLabs/hpat"
-
-    @property
-    def target_tag(self):
-        return "0.29.2"
-
-    @property
     def conda_dependencies(self):
         return ["pyspark openjdk"]
 
@@ -148,10 +140,10 @@ if __name__ == "__main__":
     inject_conda_path(MINCONDA_BIN_PATH)
     conda_update_conda()
     for project in [HpatTests()]:
-        if not os.path.exists(project.name):
-            git_clone(project.clone_url)
-        os.chdir(project.name)
-        git_checkout(project.target_tag)
+        #if not os.path.exists(project.name):
+        #    git_clone(project.clone_url)
+        #os.chdir(project.name)
+        #git_checkout(project.target_tag)
         if project.name not in conda_environments():
             conda_create_env(project.name)
             conda_install_numba_dev(project.name)
