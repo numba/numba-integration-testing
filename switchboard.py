@@ -166,7 +166,7 @@ class HpatTests(NumbaIntegrationTestTarget):
                 ]
 
     def install(self):
-        conda_install(project.name,
+        conda_install(self.name,
                       "-c ehsantn "
                       "-c anaconda "
                       "-c conda-forge "
