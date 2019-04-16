@@ -83,6 +83,45 @@ def conda_install(env, target):
     execute("conda install -y -n {} {}".format(env, target))
 
 
+class NumbaIntegrationTestTarget(object):
+
+    @property
+    def name(self):
+        raise NotImplementedError
+
+    @property
+    def clone_url(self):
+        raise NotImplementedError
+
+    @property
+    def target_tag(self):
+        raise NotImplementedError
+
+    @property
+    def conda_dependencies(self):
+        raise NotImplementedError
+
+    def install(self):
+        raise NotImplementedError
+
+    def run_tests(self):
+        raise NotImplementedError
+
+    @property
+    def needs_clone(self):
+        try:
+            self.clone_url()
+        except NotImplementedError:
+            return False
+
+    @property
+    def needs_checkout(self):
+        try:
+            self.target_tag()
+        except NotImplementedError:
+            return False
+
+
 class UmapTests(object):
 
     @property
@@ -118,7 +157,7 @@ class HpatTests(object):
     def conda_dependencies(self):
         return ["pyspark openjdk",
                 "-c ehsantn h5py",
-               ]
+                ]
 
     def install(self):
         conda_install(project.name,
@@ -132,8 +171,7 @@ class HpatTests(object):
         execute("python -m hpat.runtests")
 
 
-if __name__ == "__main__":
-    basedir = os.getcwd()
+def bootstrap_miniconda():
     url = conda_url()
     if not os.path.exists(MINCONDA_INSTALLER):
         wget_conda(url)
@@ -141,18 +179,31 @@ if __name__ == "__main__":
         install_miniconda(MINCONDA_FULL_PATH)
     inject_conda_path(MINCONDA_BIN_PATH)
     conda_update_conda()
-    for project in [HpatTests()]:
-        #if not os.path.exists(project.name):
-        #    git_clone(project.clone_url)
-        #os.chdir(project.name)
-        #git_checkout(project.target_tag)
-        if project.name not in conda_environments():
-            conda_create_env(project.name)
-            conda_install_numba_dev(project.name)
-            for dep in project.conda_dependencies:
-                conda_install(project.name, dep)
 
+
+def setup_git(project):
+    if project.needs_clone and not os.path.exists(project.name):
+        git_clone(project.clone_url)
+    os.chdir(project.name)
+    if project.needs_checkout:
+        git_checkout(project.target_tag)
+
+
+def setup_environment(project):
+    if project.name not in conda_environments():
+        conda_create_env(project.name)
+        conda_install_numba_dev(project.name)
+        for dep in project.conda_dependencies:
+            conda_install(project.name, dep)
+
+
+if __name__ == "__main__":
+    basedir = os.getcwd()
+    bootstrap_miniconda()
+    for project in [HpatTests()]:
+        os.chdir(basedir)
+        setup_git(project)
+        setup_environment(project)
         conda_switch_environment(project.name)
         project.install()
         project.run_tests()
-        os.chdir(basedir)
