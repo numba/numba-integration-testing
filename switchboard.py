@@ -50,10 +50,10 @@ def inject_conda_path(miniconda_path):
 
 
 def conda_switch_environment(env):
-    old = os.environ["PATH"].split(":")
-    env_bin_path = os.path.join(conda_environments()[env], "bin")
-    new = [env_bin_path] + old[1:]
-    os.environ["PATH"] = ":".join(new)
+    os.environ["PATH"] = ":".join(
+        [os.path.join(conda_environments()[env], "bin")] +
+        os.environ["PATH"].split(":")[1:]
+    )
 
 
 def git_clone(url):
@@ -69,8 +69,9 @@ def conda_update_conda():
 
 
 def conda_environments():
-    loaded_json = json.loads(execute("conda env list --json"))["envs"]
-    return dict(((os.path.basename(i), i) for i in loaded_json))
+    return dict(((os.path.basename(i), i)
+                 for i in json.loads(execute(
+                     "conda env list --json"))["envs"]))
 
 
 def conda_create_env(name):
