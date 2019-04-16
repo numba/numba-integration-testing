@@ -158,10 +158,11 @@ if __name__ == "__main__":
         git_checkout(project.target_tag)
         if project.name not in conda_environments():
             conda_create_env(project.name)
-            conda_switch_environment(project.name)
             conda_install_numba_dev(project.name)
             for dep in project.conda_dependencies:
                 conda_install(project.name, dep)
+
+        conda_switch_environment(project.name)
         project.install()
         project.run_tests()
         os.chdir(basedir)
