@@ -124,22 +124,18 @@ class HpatTests(object):
 
     @property
     def conda_dependencies(self):
-        return ["pyspark openjdk numpy scipy pandas boost cmake pyarrow",
-                "-c conda-forge mpich mpi",
-                "-c ehsantn h5py",
-                ]
+        return ["pyspark openjdk"],
 
     def install(self):
-        if UNAME == "Linux":
-            conda_install(self.name,
-                          "gcc_linux-64 gxx_linux-64 gfortran_linux-64")
-        os.environ["HDF5_DIR"] = MINCONDA_FULL_PATH
-        os.environ["CONDA_PREFIX"] = conda_environments()["hpat"]
-        execute("python setup.py develop")
+        conda_install(project.name,
+                      "-c ehsantn "
+                      "-c anaconda "
+                      "-c conda-forge "
+                      "hpat")
 
     def run_tests(self):
-        execute("python hpat/tests/gen_test_data.py")
-        execute("python -m unittest")
+        execute("python -m hpat.tests.gen_test_data")
+        execute("python -m python -m hpat.runtests")
 
 
 if __name__ == "__main__":
