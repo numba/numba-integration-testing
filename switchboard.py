@@ -115,6 +115,8 @@ class NumbaIntegrationTestTarget(object):
             self.clone_url()
         except NotImplementedError:
             return False
+        else:
+            return True
 
     @property
     def needs_checkout(self):
@@ -122,9 +124,11 @@ class NumbaIntegrationTestTarget(object):
             self.target_tag()
         except NotImplementedError:
             return False
+        else:
+            return True
 
 
-class UmapTests(object):
+class UmapTests(NumbaIntegrationTestTarget):
 
     @property
     def name(self):
@@ -149,7 +153,7 @@ class UmapTests(object):
         execute("nosetests -s umap")
 
 
-class HpatTests(object):
+class HpatTests(NumbaIntegrationTestTarget):
 
     @property
     def name(self):
@@ -184,9 +188,11 @@ def bootstrap_miniconda():
 
 
 def setup_git(project):
-    if project.needs_clone and not os.path.exists(project.name):
-        git_clone(project.clone_url)
-    os.chdir(project.name)
+    print(project.needs_clone)
+    if project.needs_clone:
+        if not os.path.exists(project.name):
+            git_clone(project.clone_url)
+        os.chdir(project.name)
     if project.needs_checkout:
         git_checkout(project.target_tag)
 
