@@ -26,7 +26,7 @@ def execute(command):
 UNAME = execute('uname').strip().decode('utf-8')
 
 
-def conda_url():
+def miniconda_url():
     if UNAME == "Linux":
         filename = MINCONDA_FILE_TEMPLATE.format(LINUX_X86_64)
     elif UNAME == "Darwin":
@@ -178,7 +178,7 @@ class HpatTests(NumbaIntegrationTestTarget):
 
 
 def bootstrap_miniconda():
-    url = conda_url()
+    url = miniconda_url()
     if not os.path.exists(MINCONDA_INSTALLER):
         wget_conda(url)
     if not os.path.exists(MINCONDA_FULL_PATH):
