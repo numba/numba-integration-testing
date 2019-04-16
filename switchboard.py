@@ -124,7 +124,7 @@ class HpatTests(object):
 
     @property
     def conda_dependencies(self):
-        return ["pyspark openjdk"],
+        return ["pyspark openjdk"]
 
     def install(self):
         conda_install(project.name,
