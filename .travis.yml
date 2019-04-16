@@ -3,3 +3,5 @@ language: python
 cache: pip
 script:
 - python switchboard.py
+notifications:
+    email: false
