@@ -162,7 +162,7 @@ class HpatTests(NumbaIntegrationTestTarget):
 
     @property
     def conda_dependencies(self):
-        return ["pyspark openjdk",
+        return ["pyspark openjdk scipy",
                 "-c ehsantn h5py",
                 ]
 
