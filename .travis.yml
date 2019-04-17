@@ -1,7 +1,13 @@
 sudo: false
 language: python
 cache: pip
+matrix:
+    include:
+        - env: TARGET=hpat
+        - env: TARGET=umap
+        - env: TARGET=librosa
+        - env: TARGET=clifford
 script:
-- ./switchboard.py
+- ./switchboard.py -t $TARGET
 notifications:
     email: false
