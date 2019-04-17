@@ -1,3 +1,4 @@
+======================
 Numba Integration Test
 ======================
 
@@ -8,7 +9,7 @@ Numba version to test with, will be the latest version of the git
 ``master`` branch where the test suite passed.
 
 Usage
------
+=====
 
 The main entry point is a single script ``switchboard.py`` which is used to
 drive the integration test. This script will run on at least Python 2.7 and
@@ -16,6 +17,23 @@ drive the integration test. This script will run on at least Python 2.7 and
 
 It has multiple *stages*, which are things to perform and multiple *targets*,
 which are projects to be tested.
+
+Targets
+-------
+
+Targets are projects that should be tested as part of the integratuion tests.
+In an ideal case, the project ships the tests and running the tests is simply a
+matter of installing the (potentially pre-compiled) conda package and running
+the tests. In case this isn't possible, doing a ``git clone``, building the
+package from source and running the tests from the clone is also supported.
+The ``switchboard.py`` contains a class ``NumbaIntegrationTestTarget``. Adding
+projects involves creating a subclass and filling in the blanks. The
+``switchboard.py`` will automatically detect any such subclasses and make them
+available.
+
+
+Stages
+------
 
 The stages are as follows:
 
