@@ -40,12 +40,15 @@ def echo(value):
     print("{} {}".format(PREFIX, value))
 
 
-def execute(command):
+def execute(command, capture=False):
     echo("running: '{}'".format(command))
-    return subprocess.check_output(shlex.split(command))
+    if capture:
+        return subprocess.check_output(shlex.split(command))
+    else:
+        subprocess.check_call(shlex.split(command))
 
 
-UNAME = execute('uname').strip().decode('utf-8')
+UNAME = execute('uname', capture=True).strip().decode('utf-8')
 
 
 def miniconda_url():
@@ -93,7 +96,7 @@ def conda_update_conda():
 def conda_environments():
     return dict(((os.path.basename(i), i)
                  for i in json.loads(execute(
-                     "conda env list --json"))["envs"]))
+                     "conda env list --json", capture=True))["envs"]))
 
 
 def conda_create_env(name):
