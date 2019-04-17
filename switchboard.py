@@ -186,7 +186,8 @@ class UmapTests(NumbaIntegrationTestTarget):
 
     @property
     def target_tag(self):
-        return(git_ls_remote_tags(self.clone_url)[-1])
+        return([t for t in git_ls_remote_tags(self.clone_url) if not
+                t.startswith("v")][-1])
 
     @property
     def conda_dependencies(self):
@@ -229,7 +230,8 @@ class LibrosaTests(NumbaIntegrationTestTarget):
 
     @property
     def target_tag(self):
-        return(git_ls_remote_tags(self.clone_url)[-1])
+        return([t for t in git_ls_remote_tags(self.clone_url) if not
+                t.startswith("v")][-1])
 
     @property
     def conda_dependencies(self):
