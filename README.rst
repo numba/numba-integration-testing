@@ -3,7 +3,7 @@ Numba Integration Test
 ======================
 
 As part of the continuous quality assurance of the `Numba project
-<https://numba.pydata.org/>`_ we test the compatability of Numba with the
+<https://numba.pydata.org/>`_ we test the compatibility of Numba with the
 latests releases of specific libraries that make heavy use of Numba. The target
 Numba version to test with, will be the latest version of the git
 ``master`` branch where the test suite passed.
@@ -21,7 +21,7 @@ which are projects to be tested.
 Targets
 -------
 
-Targets are projects that should be tested as part of the integratuion tests.
+Targets are projects that should be tested as part of the integration tests.
 In an ideal case, the project ships the tests and running the tests is simply a
 matter of installing the (potentially pre-compiled) conda package and running
 the tests. In case this isn't possible, doing a ``git clone``, building the
@@ -76,7 +76,7 @@ Please see the output of ``./switchboard.py -h`` for more information.
 Caveats
 =======
 
-* The script is reasonably roboust but won't respond well to malformed user
+* The script is reasonably robust but won't respond well to malformed user
   input. For example, if you try to run only the ``test`` stage without the
   others it is likely to fail.
 
