@@ -88,6 +88,20 @@ def git_clone(url):
     execute("git clone {}".format(url))
 
 
+def git_clone_tag(url, tag):
+    execute("git clone -b {} {} --depth=1".format(tag, url))
+
+
+def git_tag():
+    return execute("git tag", capture=True).split('\n')
+
+
+def git_ls_remote_tags(url):
+    return [os.path.basename(line.split("\t")[1])
+            for line in execute("git ls-remote --tags --refs {}".format(url),
+            capture=True).split("\n") if line]
+
+
 def git_checkout(tag):
     execute("git checkout {}".format(tag))
 
@@ -172,7 +186,7 @@ class UmapTests(NumbaIntegrationTestTarget):
 
     @property
     def target_tag(self):
-        return "0.3.8"
+        return(git_ls_remote_tags(self.clone_url)[-1])
 
     @property
     def conda_dependencies(self):
@@ -215,7 +229,7 @@ class LibrosaTests(NumbaIntegrationTestTarget):
 
     @property
     def target_tag(self):
-        return "0.6.3"
+        return(git_ls_remote_tags(self.clone_url)[-1])
 
     @property
     def conda_dependencies(self):
@@ -243,7 +257,7 @@ class CliffordTests(NumbaIntegrationTestTarget):
 
     @property
     def target_tag(self):
-        return "v1.0.4"
+        return(git_ls_remote_tags(self.clone_url)[-1])
 
     @property
     def conda_dependencies(self):
@@ -271,10 +285,8 @@ def bootstrap_miniconda():
 def setup_git(target):
     if target.needs_clone:
         if not os.path.exists(target.name):
-            git_clone(target.clone_url)
+            git_clone_tag(target.clone_url, target.target_tag)
         os.chdir(target.name)
-    if target.needs_checkout:
-        git_checkout(target.target_tag)
 
 
 def setup_environment(target):
