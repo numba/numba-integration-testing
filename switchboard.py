@@ -210,21 +210,21 @@ def bootstrap_miniconda():
     conda_update_conda()
 
 
-def setup_git(project):
-    if project.needs_clone:
-        if not os.path.exists(project.name):
-            git_clone(project.clone_url)
-        os.chdir(project.name)
-    if project.needs_checkout:
-        git_checkout(project.target_tag)
+def setup_git(target):
+    if target.needs_clone:
+        if not os.path.exists(target.name):
+            git_clone(target.clone_url)
+        os.chdir(target.name)
+    if target.needs_checkout:
+        git_checkout(target.target_tag)
 
 
-def setup_environment(project):
-    if project.name not in conda_environments():
-        conda_create_env(project.name)
-        conda_install_numba_dev(project.name)
-        for dep in project.conda_dependencies:
-            conda_install(project.name, dep)
+def setup_environment(target):
+    if target.name not in conda_environments():
+        conda_create_env(target.name)
+        conda_install_numba_dev(target.name)
+        for dep in target.conda_dependencies:
+            conda_install(target.name, dep)
 
 
 def switch_environment(target):
