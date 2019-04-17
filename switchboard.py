@@ -58,20 +58,20 @@ def miniconda_url():
     return MINICONDA_BASE_URL + filename
 
 
-def wget_conda(url):
-    execute("wget {} -O miniconda.sh".format(url))
+def wget_conda(url, output):
+    execute("wget {} -O {}".format(url, output))
 
 
 def install_miniconda(install_path):
     execute("bash miniconda.sh -b -p {}".format(install_path))
 
 
-def inject_conda_path(miniconda_path):
+def inject_conda_path():
     os.environ["PATH"] = ":".join([MINCONDA_BIN_PATH, MINCONDA_CONDABIN_PATH] +
                                   os.environ["PATH"].split(":"))
 
 
-def conda_switch_environment(env):
+def switch_environment_path(env):
     os.environ["PATH"] = ":".join(
         [os.path.join(conda_environments()[env], "bin")] +
         os.environ["PATH"].split(":")[1:]
@@ -203,10 +203,10 @@ class HpatTests(NumbaIntegrationTestTarget):
 def bootstrap_miniconda():
     url = miniconda_url()
     if not os.path.exists(MINCONDA_INSTALLER):
-        wget_conda(url)
+        wget_conda(url, MINCONDA_INSTALLER)
     if not os.path.exists(MINCONDA_FULL_PATH):
         install_miniconda(MINCONDA_FULL_PATH)
-    inject_conda_path(MINCONDA_BIN_PATH)
+    inject_conda_path()
     conda_update_conda()
 
 
@@ -228,7 +228,7 @@ def setup_environment(target):
 
 
 def switch_environment(target):
-    conda_switch_environment(target.name)
+    switch_environment_path(target.name)
 
 
 def find_all_targets():
@@ -239,7 +239,7 @@ def find_all_targets():
             ]
 
 
-available_targets = dict((target.name, target)
+AVAILABLE_TARGETS = dict((target.name, target)
                          for target in find_all_targets())
 
 
@@ -254,8 +254,8 @@ def parse_arguments():
     parser.add_argument("-t", "--targets",
                         nargs="*",
                         type=str,
-                        choices=list(available_targets.keys()),
-                        default=list(available_targets.keys()),
+                        choices=list(AVAILABLE_TARGETS.keys()),
+                        default=list(AVAILABLE_TARGETS.keys()),
                         metavar="TARGET")
     return parser.parse_args()
 
@@ -266,8 +266,8 @@ def main(stages, targets):
     if STAGE_MINICONDA in stages:
         bootstrap_miniconda()
     else:
-        inject_conda_path(MINCONDA_BIN_PATH)
-    for name, target in available_targets.items():
+        inject_conda_path()
+    for name, target in AVAILABLE_TARGETS.items():
         if name in targets:
             os.chdir(basedir)
             if STAGE_CLONE in stages:
