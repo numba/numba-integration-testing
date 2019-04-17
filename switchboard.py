@@ -231,6 +231,33 @@ class LibrosaTests(NumbaIntegrationTestTarget):
         execute("pytest")
 
 
+class CliffordTests(NumbaIntegrationTestTarget):
+
+    @property
+    def name(self):
+        return "clifford"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/pygae/clifford.git"
+
+    @property
+    def target_tag(self):
+        return "v1.0.4"
+
+    @property
+    def conda_dependencies(self):
+        return [
+            "future numpy scipy numba pip nose h5py",
+        ]
+
+    def install(self):
+        execute("python setup.py install")
+
+    def run_tests(self):
+        execute("nosetests")
+
+
 def bootstrap_miniconda():
     url = miniconda_url()
     if not os.path.exists(MINCONDA_INSTALLER):
