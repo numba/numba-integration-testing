@@ -282,7 +282,7 @@ def main(stages, targets):
                     target.run_tests()
                 except subprocess.CalledProcessError:
                     failed.append(target.name)
-    if STAGE_TESTS in stages and failed:
+    if STAGE_TESTS in stages:
         if failed:
             echo("The following tests failed: '{}'".format(failed))
             sys.exit(23)
