@@ -72,7 +72,8 @@ def install_miniconda(install_path):
 
 def inject_conda_path():
     os.environ["PATH"] = ":".join(
-        [MINCONDA_BIN_PATH, MINCONDA_CONDABIN_PATH] + os.environ["PATH"].split(":")
+        [MINCONDA_BIN_PATH, MINCONDA_CONDABIN_PATH]
+        + os.environ["PATH"].split(":")
     )
 
 
@@ -99,7 +100,9 @@ def conda_environments():
     return dict(
         (
             (os.path.basename(i), i)
-            for i in json.loads(execute("conda env list --json", capture=True))["envs"]
+            for i in json.loads(
+                execute("conda env list --json", capture=True)
+            )["envs"]
         )
     )
 
@@ -192,7 +195,9 @@ class HpatTests(NumbaIntegrationTestTarget):
         return ["pyspark openjdk scipy", "-c ehsantn h5py"]
 
     def install(self):
-        conda_install(self.name, "-c ehsantn " "-c anaconda " "-c conda-forge " "hpat")
+        conda_install(
+            self.name, "-c ehsantn " "-c anaconda " "-c conda-forge " "hpat"
+        )
 
     def run_tests(self):
         execute("python -m hpat.tests.gen_test_data")
@@ -267,7 +272,9 @@ def find_all_targets():
     ]
 
 
-AVAILABLE_TARGETS = dict((target.name, target) for target in find_all_targets())
+AVAILABLE_TARGETS = dict(
+    (target.name, target) for target in find_all_targets()
+)
 
 
 def parse_arguments():
