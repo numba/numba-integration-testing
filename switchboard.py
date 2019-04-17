@@ -197,7 +197,6 @@ def bootstrap_miniconda():
 
 
 def setup_git(project):
-    print(project.needs_clone)
     if project.needs_clone:
         if not os.path.exists(project.name):
             git_clone(project.clone_url)
