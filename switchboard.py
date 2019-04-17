@@ -261,9 +261,12 @@ def parse_arguments():
 
 
 def main(stages, targets):
+    failed = []
     basedir = os.getcwd()
     if STAGE_MINICONDA in stages:
         bootstrap_miniconda()
+    else:
+        inject_conda_path(MINCONDA_BIN_PATH)
     for name, target in available_targets.items():
         if name in targets:
             os.chdir(basedir)
@@ -275,7 +278,16 @@ def main(stages, targets):
             if STAGE_INSTALL in stages:
                 target.install()
             if STAGE_TESTS in stages:
-                target.run_tests()
+                try:
+                    target.run_tests()
+                except subprocess.CalledProcessError:
+                    failed.append(target.name)
+    if STAGE_TESTS in stages and failed:
+        if failed:
+            echo("The following tests failed: '{}'".format(failed))
+            sys.exit(23)
+        else:
+            echo("All integration tests successful")
 
 
 if __name__ == "__main__":
