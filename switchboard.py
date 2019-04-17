@@ -227,8 +227,6 @@ if __name__ == "__main__":
     basedir = os.getcwd()
     bootstrap_miniconda()
     for name, target in targets.items():
-        if name == 'umap':
-            continue
         os.chdir(basedir)
         setup_git(target)
         setup_environment(target)
