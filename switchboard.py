@@ -21,13 +21,27 @@ LINUX_X86_64 = "Linux-x86_64"
 MACOSX_X86_64 = "MacOSX-x86_64"
 
 STAGE_MINICONDA = "miniconda"
+STAGE_CLONE = "clone"
 STAGE_ENVIRONMENT = "environment"
+STAGE_INSTALL = "install"
 STAGE_TESTS = "tests"
-ALL_STAGES = [STAGE_MINICONDA, STAGE_ENVIRONMENT, STAGE_TESTS]
+ALL_STAGES = [STAGE_MINICONDA,
+              STAGE_CLONE,
+              STAGE_ENVIRONMENT,
+              STAGE_INSTALL,
+              STAGE_TESTS,
+              ]
+
+
+PREFIX = "::>>"
+
+
+def echo(value):
+    print("{} {}".format(PREFIX, value))
 
 
 def execute(command):
-    print(command)
+    echo("running: '{}'".format(command))
     return subprocess.check_output(shlex.split(command))
 
 
@@ -225,7 +239,8 @@ def find_all_targets():
             ]
 
 
-targets = dict((target.name, target) for target in find_all_targets())
+available_targets = dict((target.name, target)
+                         for target in find_all_targets())
 
 
 def parse_arguments():
@@ -234,27 +249,37 @@ def parse_arguments():
                         nargs="*",
                         type=str,
                         choices=ALL_STAGES,
+                        default=ALL_STAGES,
                         metavar="STAGE")
     parser.add_argument("-t", "--targets",
                         nargs="*",
                         type=str,
-                        choices=targets,
+                        choices=list(available_targets.keys()),
+                        default=list(available_targets.keys()),
                         metavar="TARGET")
     return parser.parse_args()
 
 
 def main(stages, targets):
     basedir = os.getcwd()
-    bootstrap_miniconda()
-    for name, target in targets.items():
-        os.chdir(basedir)
-        setup_git(target)
-        setup_environment(target)
-        switch_environment(target)
-        target.install()
-        target.run_tests()
+    if STAGE_MINICONDA in stages:
+        bootstrap_miniconda()
+    for name, target in available_targets.items():
+        if name in targets:
+            os.chdir(basedir)
+            if STAGE_CLONE in stages:
+                setup_git(target)
+            if STAGE_ENVIRONMENT in stages:
+                setup_environment(target)
+            switch_environment(target)
+            if STAGE_INSTALL in stages:
+                target.install()
+            if STAGE_TESTS in stages:
+                target.run_tests()
 
 
 if __name__ == "__main__":
     args = parse_arguments()
-    print(args)
+    echo("stages are: '{}'".format(args.stages))
+    echo("targets are: '{}'".format(args.targets))
+    main(args.stages, args.targets)
