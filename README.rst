@@ -72,3 +72,8 @@ Examples::
     $ ./switchboard.py -s miniconda clone environment -t umap
 
 Please see the output of ``./switchboard.py -h`` for more information.
+
+Copyright
+=========
+
+Copyright 2019 Anaconda Inc.
