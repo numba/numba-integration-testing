@@ -203,6 +203,32 @@ class HpatTests(NumbaIntegrationTestTarget):
         execute("python -m hpat.runtests")
 
 
+class LibrosaTests(NumbaIntegrationTestTarget):
+
+    @property
+    def name(self):
+        return "librosa"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/librosa/librosa.git"
+
+    @property
+    def target_tag(self):
+        return "0.6.3"
+
+    @property
+    def conda_dependencies(self):
+        return ["pip numpy scipy coverage scikit-learn matplotlib pytest",
+                "-c conda-forge ffmpeg"]
+
+    def install(self):
+        execute("pip install --pre -e .[tests]")
+
+    def run_tests(self):
+        execute("pytest")
+
+
 def bootstrap_miniconda():
     url = miniconda_url()
     if not os.path.exists(MINCONDA_INSTALLER):
