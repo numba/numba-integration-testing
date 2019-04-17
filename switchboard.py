@@ -25,12 +25,13 @@ STAGE_CLONE = "clone"
 STAGE_ENVIRONMENT = "environment"
 STAGE_INSTALL = "install"
 STAGE_TESTS = "tests"
-ALL_STAGES = [STAGE_MINICONDA,
-              STAGE_CLONE,
-              STAGE_ENVIRONMENT,
-              STAGE_INSTALL,
-              STAGE_TESTS,
-              ]
+ALL_STAGES = [
+    STAGE_MINICONDA,
+    STAGE_CLONE,
+    STAGE_ENVIRONMENT,
+    STAGE_INSTALL,
+    STAGE_TESTS,
+]
 
 
 PREFIX = "::>>"
@@ -48,7 +49,7 @@ def execute(command, capture=False):
         subprocess.check_call(shlex.split(command))
 
 
-UNAME = execute('uname', capture=True).strip().decode('utf-8')
+UNAME = execute("uname", capture=True).strip().decode("utf-8")
 
 
 def miniconda_url():
@@ -70,14 +71,15 @@ def install_miniconda(install_path):
 
 
 def inject_conda_path():
-    os.environ["PATH"] = ":".join([MINCONDA_BIN_PATH, MINCONDA_CONDABIN_PATH] +
-                                  os.environ["PATH"].split(":"))
+    os.environ["PATH"] = ":".join(
+        [MINCONDA_BIN_PATH, MINCONDA_CONDABIN_PATH] + os.environ["PATH"].split(":")
+    )
 
 
 def switch_environment_path(env):
     os.environ["PATH"] = ":".join(
-        [os.path.join(conda_environments()[env], "bin")] +
-        os.environ["PATH"].split(":")[1:]
+        [os.path.join(conda_environments()[env], "bin")]
+        + os.environ["PATH"].split(":")[1:]
     )
 
 
@@ -94,9 +96,12 @@ def conda_update_conda():
 
 
 def conda_environments():
-    return dict(((os.path.basename(i), i)
-                 for i in json.loads(execute(
-                     "conda env list --json", capture=True))["envs"]))
+    return dict(
+        (
+            (os.path.basename(i), i)
+            for i in json.loads(execute("conda env list --json", capture=True))["envs"]
+        )
+    )
 
 
 def conda_create_env(name):
@@ -112,7 +117,6 @@ def conda_install(env, target):
 
 
 class NumbaIntegrationTestTarget(object):
-
     @property
     def name(self):
         raise NotImplementedError
@@ -155,7 +159,6 @@ class NumbaIntegrationTestTarget(object):
 
 
 class UmapTests(NumbaIntegrationTestTarget):
-
     @property
     def name(self):
         return "umap"
@@ -180,23 +183,16 @@ class UmapTests(NumbaIntegrationTestTarget):
 
 
 class HpatTests(NumbaIntegrationTestTarget):
-
     @property
     def name(self):
         return "hpat"
 
     @property
     def conda_dependencies(self):
-        return ["pyspark openjdk scipy",
-                "-c ehsantn h5py",
-                ]
+        return ["pyspark openjdk scipy", "-c ehsantn h5py"]
 
     def install(self):
-        conda_install(self.name,
-                      "-c ehsantn "
-                      "-c anaconda "
-                      "-c conda-forge "
-                      "hpat")
+        conda_install(self.name, "-c ehsantn " "-c anaconda " "-c conda-forge " "hpat")
 
     def run_tests(self):
         execute("python -m hpat.tests.gen_test_data")
@@ -204,7 +200,6 @@ class HpatTests(NumbaIntegrationTestTarget):
 
 
 class LibrosaTests(NumbaIntegrationTestTarget):
-
     @property
     def name(self):
         return "librosa"
@@ -219,8 +214,10 @@ class LibrosaTests(NumbaIntegrationTestTarget):
 
     @property
     def conda_dependencies(self):
-        return ["pip numpy scipy coverage scikit-learn matplotlib pytest",
-                "-c conda-forge ffmpeg"]
+        return [
+            "pip numpy scipy coverage scikit-learn matplotlib pytest",
+            "-c conda-forge ffmpeg",
+        ]
 
     def install(self):
         execute("pip install --pre -e .[tests]")
@@ -261,31 +258,38 @@ def switch_environment(target):
 
 
 def find_all_targets():
-    return [obj() for name, obj in inspect.getmembers(sys.modules[__name__])
-            if inspect.isclass(obj)
-            and issubclass(obj, NumbaIntegrationTestTarget)
-            and obj is not NumbaIntegrationTestTarget
-            ]
+    return [
+        obj()
+        for name, obj in inspect.getmembers(sys.modules[__name__])
+        if inspect.isclass(obj)
+        and issubclass(obj, NumbaIntegrationTestTarget)
+        and obj is not NumbaIntegrationTestTarget
+    ]
 
 
-AVAILABLE_TARGETS = dict((target.name, target)
-                         for target in find_all_targets())
+AVAILABLE_TARGETS = dict((target.name, target) for target in find_all_targets())
 
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--stages",
-                        nargs="*",
-                        type=str,
-                        choices=ALL_STAGES,
-                        default=ALL_STAGES,
-                        metavar="STAGE")
-    parser.add_argument("-t", "--targets",
-                        nargs="*",
-                        type=str,
-                        choices=list(AVAILABLE_TARGETS.keys()),
-                        default=list(AVAILABLE_TARGETS.keys()),
-                        metavar="TARGET")
+    parser.add_argument(
+        "-s",
+        "--stages",
+        nargs="*",
+        type=str,
+        choices=ALL_STAGES,
+        default=ALL_STAGES,
+        metavar="STAGE",
+    )
+    parser.add_argument(
+        "-t",
+        "--targets",
+        nargs="*",
+        type=str,
+        choices=list(AVAILABLE_TARGETS.keys()),
+        default=list(AVAILABLE_TARGETS.keys()),
+        metavar="TARGET",
+    )
     return parser.parse_args()
 
 
