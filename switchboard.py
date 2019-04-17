@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
+import inspect
 import os
 import shlex
 import subprocess
+import sys
 import json
 
 MINICONDA_BASE_URL = "https://repo.continuum.io/miniconda/"
@@ -206,13 +208,30 @@ def setup_environment(project):
             conda_install(project.name, dep)
 
 
+def switch_environment(target):
+    conda_switch_environment(target.name)
+
+
+def find_all_targets():
+    return [obj() for name, obj in inspect.getmembers(sys.modules[__name__])
+            if inspect.isclass(obj)
+            and issubclass(obj, NumbaIntegrationTestTarget)
+            and obj is not NumbaIntegrationTestTarget
+            ]
+
+
+targets = dict((target.name, target) for target in find_all_targets())
+
+
 if __name__ == "__main__":
     basedir = os.getcwd()
     bootstrap_miniconda()
-    for project in [HpatTests()]:
+    for name, target in targets.items():
+        if name == 'umap':
+            continue
         os.chdir(basedir)
-        setup_git(project)
-        setup_environment(project)
-        conda_switch_environment(project.name)
-        project.install()
-        project.run_tests()
+        setup_git(target)
+        setup_environment(target)
+        switch_environment(target)
+        target.install()
+        target.run_tests()
