@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import argparse
 import inspect
 import os
 import shlex
@@ -18,6 +19,11 @@ MINCONDA_CONDABIN_PATH = os.path.join(MINCONDA_FULL_PATH, "condabin")
 LINUX_X86 = "Linux-x86"
 LINUX_X86_64 = "Linux-x86_64"
 MACOSX_X86_64 = "MacOSX-x86_64"
+
+STAGE_MINICONDA = "miniconda"
+STAGE_ENVIRONMENT = "environment"
+STAGE_TESTS = "tests"
+ALL_STAGES = [STAGE_MINICONDA, STAGE_ENVIRONMENT, STAGE_TESTS]
 
 
 def execute(command):
@@ -223,7 +229,22 @@ def find_all_targets():
 targets = dict((target.name, target) for target in find_all_targets())
 
 
-if __name__ == "__main__":
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--stages",
+                        nargs="*",
+                        type=str,
+                        choices=ALL_STAGES,
+                        metavar="STAGE")
+    parser.add_argument("-t", "--targets",
+                        nargs="*",
+                        type=str,
+                        choices=targets,
+                        metavar="TARGET")
+    return parser.parse_args()
+
+
+def main(stages, targets):
     basedir = os.getcwd()
     bootstrap_miniconda()
     for name, target in targets.items():
@@ -233,3 +254,8 @@ if __name__ == "__main__":
         switch_environment(target)
         target.install()
         target.run_tests()
+
+
+if __name__ == "__main__":
+    args = parse_arguments()
+    print(args)
