@@ -115,7 +115,7 @@ class NumbaIntegrationTestTarget(object):
     @property
     def needs_clone(self):
         try:
-            self.clone_url()
+            self.clone_url
         except NotImplementedError:
             return False
         else:
@@ -124,7 +124,7 @@ class NumbaIntegrationTestTarget(object):
     @property
     def needs_checkout(self):
         try:
-            self.target_tag()
+            self.target_tag
         except NotImplementedError:
             return False
         else:
