@@ -80,13 +80,6 @@ Caveats
   input. For example, if you try to run only the ``test`` stage without the
   others it is likely to fail.
 
-* For many of those projects who need to be cloned, the version to test with is
-  hardcoded in the script. This means, new releases will not be automatically
-  detected. This can, in principle, be fixed by checking the available tags on
-  Github and selecting the most recent one. But, of course it would be better
-  to add the ability to run the tests from the installed package, since that
-  should always use the most recent release.
-
 Copyright
 =========
 
