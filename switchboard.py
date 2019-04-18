@@ -99,7 +99,7 @@ def git_tag():
 def git_ls_remote_tags(url):
     return [os.path.basename(line.split("\t")[1])
             for line in execute("git ls-remote --tags --refs {}".format(url),
-            capture=True).split("\n") if line]
+            capture=True).decode("utf-8").split("\n") if line]
 
 
 def git_checkout(tag):
