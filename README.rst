@@ -12,8 +12,12 @@ Usage
 =====
 
 The main entry point is a single script ``switchboard.py`` which is used to
-drive the integration test. This script will run on at least Python 2.7 and
-3.7 and has zero third-party dependencies.
+drive the integration test. This script will run on at least Python 2.7 and 3.7
+and has zero third-party dependencies, so it will probably run on a large
+variety of different CI systems and platforms. It will download and bootstrap a
+self contained miniconda distribution to ensure as clean a build as possible.
+You can also run it locally in case you need to debug a build or want to add a
+new project to test.
 
 It has multiple *stages*, which are things to perform and multiple *targets*,
 which are projects to be tested.
