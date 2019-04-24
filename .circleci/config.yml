@@ -28,11 +28,6 @@ jobs:
     steps:
       - checkout
       - run: python switchboard.py -t clifford
-  summarize:
-    docker:
-      - image: circleci/python:3.6.1
-    steps:
-      - checkout
 
 
 workflows:
@@ -43,9 +38,3 @@ workflows:
       - umap
       - librosa
       - clifford
-      - summarize:
-          requires:
-            - hpat
-            - umap
-            - librosa
-            - clifford
