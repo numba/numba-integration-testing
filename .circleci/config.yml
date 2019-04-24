@@ -1,33 +1,42 @@
-version: 2
+version: 2.1
+executors:
+  test-executor:
+    docker:
+      - image: circleci/python:3.6.1
+    working_directory: ~/repo
+
+commands:
+  run-target:
+    description: "run a specific target"
+    parameters:
+      target:
+        type: string
+        default: ""
+    steps:
+      - checkout
+      - run: python switchboard.py -t << parameters.target >>
+
 jobs:
   hpat:
-    docker:
-      - image: circleci/python:3.6.1
-    working_directory: ~/repo
+    executor: test-executor
     steps:
-      - checkout
-      - run: python switchboard.py -t hpat
+      - run-target:
+        target: hpat
   umap:
-    docker:
-      - image: circleci/python:3.6.1
-    working_directory: ~/repo
+    executor: test-executor
     steps:
-      - checkout
-      - run: python switchboard.py -t umap
+      - run-target:
+        target: umap
   librosa:
-    docker:
-      - image: circleci/python:3.6.1
-    working_directory: ~/repo
+    executor: test-executor
     steps:
-      - checkout
-      - run: python switchboard.py -t librosa
+      - run-target:
+        target: librosa
   clifford:
-    docker:
-      - image: circleci/python:3.6.1
-    working_directory: ~/repo
+    executor: test-executor
     steps:
-      - checkout
-      - run: python switchboard.py -t clifford
+      - run-target:
+        target: clifford
 
 
 workflows:
