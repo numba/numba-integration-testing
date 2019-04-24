@@ -6,7 +6,10 @@ As part of the continuous quality assurance of the `Numba project
 <https://numba.pydata.org/>`_ we test the compatibility of Numba with the
 latests releases of specific dependents, i.e. libraries that make heavy use of
 Numba. The target Numba version to test with, will be the latest version of the
-git ``master`` branch where the test suite passed.
+git ``master`` branch where the test suite passed. Configurations for both
+`CircleCI <https://circleci.com/>`_  and `Travis CI <https://travis-ci.org/>`_
+are provided but currently (April 2019) only the CircleCI confguration is
+active.
 
 Usage
 =====
