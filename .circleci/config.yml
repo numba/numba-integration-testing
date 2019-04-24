@@ -40,7 +40,7 @@ jobs:
 
 
 workflows:
-  version: 2
+  version: 2.1
   commit-integration-test:
     jobs:
       - hpat
