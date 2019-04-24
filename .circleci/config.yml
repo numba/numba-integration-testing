@@ -38,3 +38,7 @@ workflows:
       - umap
       - librosa
       - clifford
+    triggers:
+      - schedule:
+          cron: "0 5 * * *"
+      - commit
