@@ -11,6 +11,11 @@ git ``master`` branch where the test suite passed. Configurations for both
 are provided but currently (April 2019) only the CircleCI confguration is
 active.
 
+:CircleCI: |circleci|
+
+.. |circleci| image:: https://circleci.com/gh/numba/numba-integration-testing/tree/master.svg?style=svg
+    :target: https://circleci.com/gh/numba/numba-
+
 Usage
 =====
 
