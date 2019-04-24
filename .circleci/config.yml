@@ -45,5 +45,5 @@ workflows:
           requires:
             - hpat
             - umap
-            - librossa
+            - librosa
             - clifford
