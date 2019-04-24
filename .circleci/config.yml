@@ -32,7 +32,13 @@ jobs:
 
 workflows:
   version: 2
-  integration-test:
+  commit-integration-test:
+    jobs:
+      - hpat
+      - umap
+      - librosa
+      - clifford
+  nightly-integration-test:
     jobs:
       - hpat
       - umap
