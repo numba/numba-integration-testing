@@ -21,22 +21,22 @@ jobs:
     executor: test-executor
     steps:
       - run-target:
-        - target: "hpat"
+          target: "hpat"
   umap:
     executor: test-executor
     steps:
       - run-target:
-        - target: "umap"
+          target: "umap"
   librosa:
     executor: test-executor
     steps:
       - run-target:
-        - target: "librosa"
+          target: "librosa"
   clifford:
     executor: test-executor
     steps:
       - run-target:
-        - target: "clifford"
+          target: "clifford"
 
 
 workflows:
