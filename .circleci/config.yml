@@ -28,6 +28,9 @@ jobs:
     steps:
       - checkout
       - run: python switchboard.py -t clifford
+  summarize:
+    steps:
+      - checkout
 
 
 workflows:
@@ -38,3 +41,9 @@ workflows:
       - umap
       - librosa
       - clifford
+      - summarize:
+          requires:
+            - hpat
+            - umap
+            - librossa
+            - clifford
