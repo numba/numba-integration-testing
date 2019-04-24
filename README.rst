@@ -16,14 +16,22 @@ active.
 .. |circleci| image:: https://circleci.com/gh/numba/numba-integration-testing/tree/master.svg?style=svg
     :target: https://circleci.com/gh/numba/numba-integration-testing/tree/master
 
+Tested Projects
+===============
+
+* `hpat <https://github.com/IntelLabs/hpat>`_
+* `umap <https://umap-learn.readthedocs.io/en/latest/>`_
+* `librosa <https://librosa.github.io/librosa/>`_
+* `clifford <https://clifford.readthedocs.io/en/latest/>`_
+
 Usage
 =====
 
-The main entry point is a single script ``switchboard.py`` which is used to
-drive the integration test. This script will run on at least Python 2.7 and 3.7
-and has zero third-party dependencies, so it will probably run on a large
-variety of different CI systems and platforms. It will download and bootstrap a
-self contained miniconda distribution to ensure as clean a build as possible.
+The main entry point is a single script, ``switchboard.py``, which is used to
+drive the integration testing. This script will run on at least Python 2.7 and
+3.7 and has zero third-party dependencies. Hence it will probably run on a
+large variety of different CI systems and platforms. The script will download
+and bootstrap a self-contained miniconda distribution to ensure a clean build.
 You can also run it locally in case you need to debug a build or want to add a
 new project to test.
 
