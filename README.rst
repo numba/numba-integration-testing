@@ -80,7 +80,8 @@ Caveats
   input. For example, if you try to run only the ``test`` stage without the
   others it is likely to fail.
 
-Copyright
-=========
+License
+=======
 
-Copyright 2019 Anaconda Inc.
+Copyright 2019 Anaconda Inc. Licensed under the terms of the BSD two-clause
+license. See the file ``LICENSE`` for details.
