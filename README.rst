@@ -14,7 +14,7 @@ active.
 :CircleCI: |circleci|
 
 .. |circleci| image:: https://circleci.com/gh/numba/numba-integration-testing/tree/master.svg?style=svg
-    :target: https://circleci.com/gh/numba/numba-
+    :target: https://circleci.com/gh/numba/numba-integration-testing/tree/master
 
 Usage
 =====
