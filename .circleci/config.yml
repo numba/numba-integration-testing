@@ -41,13 +41,13 @@ jobs:
 
 workflows:
   version: 2.1
-  commit-integration-test:
+  commit-integration-testing:
     jobs:
       - hpat
       - umap
       - librosa
       - clifford
-  nightly-integration-test:
+  nightly-integration-testing:
     jobs:
       - hpat
       - umap
