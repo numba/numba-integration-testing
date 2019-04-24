@@ -84,6 +84,10 @@ Caveats
   input. For example, if you try to run only the ``test`` stage without the
   others it is likely to fail.
 
+* If you are running this locally and you already have an anaconda or miniconda
+  distribution activated you may run into problems. In such cases it is best to
+  run this script from a vanilla (non-customized) shell.
+
 License
 =======
 
