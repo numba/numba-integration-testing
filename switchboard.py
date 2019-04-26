@@ -303,6 +303,11 @@ def switch_environment(target):
     switch_environment_path(target.name)
 
 
+def print_environment_details(target):
+    execute("conda env export -n {}".format(target.name))
+    execute("numba -s")
+
+
 def find_all_targets():
     return [
         obj()
@@ -358,6 +363,7 @@ def main(stages, targets):
             switch_environment(target)
             if STAGE_INSTALL in stages:
                 target.install()
+            print_environment_details(target)
             if STAGE_TESTS in stages:
                 try:
                     target.run_tests()
