@@ -37,6 +37,11 @@ jobs:
     steps:
       - run-target:
           target: "clifford"
+  awkward:
+    executor: test-executor
+    steps:
+      - run-target:
+          target: "awkward"
 
 
 workflows:
@@ -47,12 +52,14 @@ workflows:
       - umap
       - librosa
       - clifford
+      - awkward
   nightly-integration-testing:
     jobs:
       - hpat
       - umap
       - librosa
       - clifford
+      - awkward
     triggers:
       - schedule:
           cron: "0 5 * * *"
