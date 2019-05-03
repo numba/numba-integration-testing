@@ -88,8 +88,8 @@ def git_clone(url):
     execute("git clone {}".format(url))
 
 
-def git_clone_tag(url, tag):
-    execute("git clone -b {} {} --depth=1".format(tag, url))
+def git_clone_tag(url, tag, directory):
+    execute("git clone -b {} {} --depth=1 {}".format(tag, url, directory))
 
 
 def git_tag():
@@ -314,7 +314,7 @@ def bootstrap_miniconda():
 def setup_git(target):
     if target.needs_clone:
         if not os.path.exists(target.name):
-            git_clone_tag(target.clone_url, target.target_tag)
+            git_clone_tag(target.clone_url, target.target_tag, target.name)
         os.chdir(target.name)
 
 
