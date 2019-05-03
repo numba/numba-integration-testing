@@ -99,7 +99,8 @@ Adding a new Target
 In order to add a new target, you need to:
 
 * Implement the logic for the target, by subclassing
-  ``NumbaIntegrationTestTarget`` and overloading necessary methods."
+  ``NumbaIntegrationTestTarget`` in the file ``switchboard.py`` and overloading
+  necessary methods."
 * Add an appropriate stanza in the CI configuration files such as
   ``.circleci/config.yml`````.
 * Updating the ``README.rst`` to reflect the current list of projects being
