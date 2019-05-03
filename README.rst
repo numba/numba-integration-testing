@@ -102,7 +102,7 @@ In order to add a new target, you need to:
   ``NumbaIntegrationTestTarget`` in the file ``switchboard.py`` and overloading
   necessary methods."
 * Add an appropriate stanza in the CI configuration files such as
-  ``.circleci/config.yml`````.
+  ``.circleci/config.yml``.
 * Updating the ``README.rst`` to reflect the current list of projects being
   tested.
 * Submit a pull-request on Github.
