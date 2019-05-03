@@ -8,7 +8,7 @@ latests releases of specific dependents, i.e. libraries that make heavy use of
 Numba. The target Numba version to test with, will be the latest version of the
 git ``master`` branch where the test suite passed. Configurations for both
 `CircleCI <https://circleci.com/>`_  and `Travis CI <https://travis-ci.org/>`_
-are provided but currently (April 2019) only the CircleCI confguration is
+are provided but currently (April 2019) only the CircleCI configuration is
 active.
 
 :CircleCI: |circleci|
@@ -93,6 +93,30 @@ Examples::
     $ ./switchboard.py -s miniconda clone environment -t umap
 
 Please see the output of ``./switchboard.py -h`` for more information.
+
+Adding a new Target
+===================
+
+In order to add a new target, you need to:
+
+* Implement the logic for the target, by subclassing
+  ``NumbaIntegrationTestTarget`` in the file ``switchboard.py`` and overloading
+  necessary methods.
+* Add an appropriate stanza in the CI configuration files such as
+  ``.circleci/config.yml``.
+* Updating the ``README.rst`` to reflect the current list of projects being
+  tested.
+* Submit a pull-request on Github.
+
+There are, roughly speaking, two different classes of targets: projects that
+ship their tests and projects that don't. For projects that ship their tests as
+part of their conda package, running the tests is usually quite easy, you
+simply install the latest conda package and run the tests.
+For projects that do not ship their tests, additional steps, such
+as cloning, latest tag discovery and building/compiling the project is needed.
+For example, the configuration for a project that does ship it's tests, is
+``HpatTests``. An example configuration of a project that doesn't ship it's
+tests is ``LibrosaTests``.
 
 Caveats
 =======
