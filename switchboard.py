@@ -277,7 +277,7 @@ class CliffordTests(NumbaIntegrationTestTarget):
 class AwkwardTests(NumbaIntegrationTestTarget):
     @property
     def name(self):
-        return "awkward"
+        return "awkward-array"
 
     @property
     def clone_url(self):
@@ -293,9 +293,9 @@ class AwkwardTests(NumbaIntegrationTestTarget):
 
     def install(self):
         execute("python setup.py install")
-        execute("cd awkward-numba")
+        os.chdir("awkward-numba")
         execute("python setup.py install")
-        execute("cd ..")
+        os.chdir("..")
 
     def run_tests(self):
         execute("pytest tests/test_numba.py")   # only the test that uses Numba
