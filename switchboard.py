@@ -274,6 +274,33 @@ class CliffordTests(NumbaIntegrationTestTarget):
         execute("nosetests")
 
 
+class AwkwardTests(NumbaIntegrationTestTarget):
+    @property
+    def name(self):
+        return "awkward-array"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/scikit-hep/awkward-array"
+
+    @property
+    def target_tag(self):
+        return list(git_ls_remote_tags(self.clone_url))[-1]
+
+    @property
+    def conda_dependencies(self):
+        return ["numpy pytest"]
+
+    def install(self):
+        execute("python setup.py install")
+        os.chdir("awkward-numba")
+        execute("python setup.py install")
+        os.chdir("..")
+
+    def run_tests(self):
+        execute("pytest tests/test_numba.py")   # only the test that uses Numba
+
+
 def bootstrap_miniconda():
     url = miniconda_url()
     if not os.path.exists(MINCONDA_INSTALLER):
