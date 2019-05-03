@@ -299,7 +299,7 @@ class AwkwardTests(NumbaIntegrationTestTarget):
         os.chdir("..")
 
     def run_tests(self):
-        execute("pytest tests/test_numba.py")   # only the test that uses Numba
+        execute("pytest -v tests/test_numba.py")   # only the test that uses Numba
 
 
 def bootstrap_miniconda():
