@@ -285,7 +285,8 @@ class AwkwardTests(NumbaIntegrationTestTarget):
 
     @property
     def target_tag(self):
-        return list(git_ls_remote_tags(self.clone_url))[-1]
+        return([t for t in git_ls_remote_tags(self.clone_url)
+                if "rc" not in t][-1])
 
     @property
     def conda_dependencies(self):
