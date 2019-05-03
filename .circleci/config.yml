@@ -37,7 +37,7 @@ jobs:
     steps:
       - run-target:
           target: "clifford"
-  awkward:
+  awkward-array:
     executor: test-executor
     steps:
       - run-target:
