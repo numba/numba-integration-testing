@@ -126,7 +126,8 @@ def conda_create_env(name):
 
 
 def conda_install_numba_dev(env):
-    execute("conda install -y -n {} -c numba/label/dev numba".format(env))
+    execute("conda install -y -n {} -c numba/label/dev numba numpy"
+            .format(env))
 
 
 def conda_install(env, target):
