@@ -277,7 +277,7 @@ class CliffordTests(NumbaIntegrationTestTarget):
 class AwkwardTests(NumbaIntegrationTestTarget):
     @property
     def name(self):
-        return "awkward-array"
+        return "awkward"
 
     @property
     def clone_url(self):
