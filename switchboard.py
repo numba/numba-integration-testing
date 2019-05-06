@@ -278,7 +278,7 @@ class CliffordTests(NumbaIntegrationTestTarget):
 class AwkwardTests(NumbaIntegrationTestTarget):
     @property
     def name(self):
-        return "awkward-array"
+        return "awkward"
 
     @property
     def clone_url(self):
@@ -286,7 +286,8 @@ class AwkwardTests(NumbaIntegrationTestTarget):
 
     @property
     def target_tag(self):
-        return list(git_ls_remote_tags(self.clone_url))[-1]
+        return([t for t in git_ls_remote_tags(self.clone_url)
+                if "rc" not in t][-1])
 
     @property
     def conda_dependencies(self):
@@ -299,7 +300,7 @@ class AwkwardTests(NumbaIntegrationTestTarget):
         os.chdir("..")
 
     def run_tests(self):
-        execute("pytest tests/test_numba.py")   # only the test that uses Numba
+        execute("pytest -v tests/test_numba.py")   # only the test that uses Numba
 
 
 def bootstrap_miniconda():

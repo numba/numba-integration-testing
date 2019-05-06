@@ -37,11 +37,11 @@ jobs:
     steps:
       - run-target:
           target: "clifford"
-  awkward-array:
+  awkward:
     executor: test-executor
     steps:
       - run-target:
-          target: "awkward-array"
+          target: "awkward"
 
 
 workflows:
@@ -52,14 +52,14 @@ workflows:
       - umap
       - librosa
       - clifford
-      - awkward-array
+      - awkward
   nightly-integration-testing:
     jobs:
       - hpat
       - umap
       - librosa
       - clifford
-      - awkward-array
+      - awkward
     triggers:
       - schedule:
           cron: "0 5 * * *"
