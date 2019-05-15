@@ -42,6 +42,11 @@ jobs:
     steps:
       - run-target:
           target: "awkward"
+  sparse:
+    executor: test-executor
+    steps:
+      - run-target:
+          target: "sparse"
 
 
 workflows:
@@ -53,6 +58,7 @@ workflows:
       - librosa
       - clifford
       - awkward
+      - sparse
   nightly-integration-testing:
     jobs:
       - hpat
@@ -60,6 +66,7 @@ workflows:
       - librosa
       - clifford
       - awkward
+      - sparse
     triggers:
       - schedule:
           cron: "0 5 * * *"
