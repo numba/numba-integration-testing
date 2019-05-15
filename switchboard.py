@@ -303,6 +303,31 @@ class AwkwardTests(NumbaIntegrationTestTarget):
         execute("pytest -v tests/test_numba.py")   # only the test that uses Numba
 
 
+class SparseTests(NumbaIntegrationTestTarget):
+
+    @property
+    def name(self):
+        return "sparse"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/pydata/sparse.git"
+
+    @property
+    def target_tag(self):
+        return git_ls_remote_tags(self.clone_url)[-1]
+
+    @property
+    def conda_dependencies(self):
+        return ["pip numpy scipy"]
+
+    def install(self):
+        execute("pip install -e .[all]")
+
+    def run_tests(self):
+        execute("pytest")
+
+
 def bootstrap_miniconda():
     url = miniconda_url()
     if not os.path.exists(MINCONDA_INSTALLER):
