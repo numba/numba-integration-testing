@@ -47,6 +47,11 @@ jobs:
     steps:
       - run-target:
           target: "sparse"
+  fastparquet:
+    executor: test-executor
+    steps:
+      - run-target:
+          target: "fastparquet"
 
 
 workflows:
@@ -59,6 +64,7 @@ workflows:
       - clifford
       - awkward
       - sparse
+      - fastparquet
   nightly-integration-testing:
     jobs:
       - hpat
@@ -67,6 +73,7 @@ workflows:
       - clifford
       - awkward
       - sparse
+      - fastparquet
     triggers:
       - schedule:
           cron: "0 5 * * *"
