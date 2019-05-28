@@ -135,26 +135,90 @@ def conda_install(env, target):
 
 
 class NumbaIntegrationTestTarget(object):
+    """ Subclass this to add metadata for a target. """
     @property
     def name(self):
+        """ Name of the target.
+
+        This will be used as the directory to clone into as well as selecting
+        the target from the command line.
+
+        Returns
+        -------
+        name : str
+            The name of the target.
+
+        """
         raise NotImplementedError
 
     @property
     def clone_url(self):
+        """ Canonical clone url for the target.
+
+        This will be used to clone the project if needed. If you omit this, the
+        project will not be cloned and it is assumed that the target ships
+        with tests. The url will be handed of directly to 'git
+        clone' so it has to be compatible with that.
+
+        Returns
+        -------
+        url : str
+            A 'git clone' compatible url.
+
+        """
         raise NotImplementedError
 
     @property
     def target_tag(self):
+        """ The target tag to checkout.
+
+        This function must work out which tag should be checked out and
+        return that. A good start is to use `git_ls_remote_tags(self.clone_url)`
+        to obtain a list of tags from the remote. If you specify `clone_url`
+        you should also specify this.
+
+        Returns
+        -------
+        tag : str
+            The target tag to checkout.
+
+        """
         raise NotImplementedError
 
     @property
     def conda_dependencies(self):
+        """ Conda dependencies for this project.
+
+        The conda dependencies for this project. If you need to install things
+        in a specific order with multiple, subsequent, `conda` calls, use
+        multiple strings. You can include any channel information such as `-c
+        numba` in the string.
+
+        Returns
+        -------
+        dependencies : list of str
+            All conda dependencies.
+        """
         raise NotImplementedError
 
     def install(self):
+        """ Execute command to install the target.
+
+        Use this to execute the command or commands you need to install the
+        project. If you specified a `clone_url` you may assume that the
+        commands will be executed inside the root directory of your clone.
+
+        """
         raise NotImplementedError
 
     def run_tests(self):
+        """ Execute command to run tests.
+
+        Use this to execute the command or commands you need to run the
+        test-suite. If you specified a `clone_url` you may assume that the
+        commands will be executed inside the root directory of your clone.
+
+        """
         raise NotImplementedError
 
     @property
