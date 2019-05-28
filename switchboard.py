@@ -156,7 +156,7 @@ class NumbaIntegrationTestTarget(object):
         """ Canonical clone url for the target.
 
         This will be used to clone the project if needed. If you omit this, the
-        project will not be cloned and it is assumed, that the target ships
+        project will not be cloned and it is assumed that the target ships
         with tests. The url will be handed of directly to 'git
         clone' so it has to be compatible with that.
 
@@ -172,7 +172,7 @@ class NumbaIntegrationTestTarget(object):
     def target_tag(self):
         """ The target tag to checkout.
 
-        This function should work out which tag should be checked out and
+        This function must work out which tag should be checked out and
         return that. A good start is to use `git_ls_remote_tags(self.clone_url)`
         to obtain a list of tags from the remote. If you specify `clone_url`
         you should also specify this.
@@ -190,8 +190,8 @@ class NumbaIntegrationTestTarget(object):
         """ Conda dependencies for this project.
 
         The conda dependencies for this project. If you need to install things
-        in a specific order with multiple, subsequent `conda` calls, use
-        multiple stings. You can include any channel information such as `-c
+        in a specific order with multiple, subsequent, `conda` calls, use
+        multiple strings. You can include any channel information such as `-c
         numba` in the string.
 
         Returns
