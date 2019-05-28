@@ -346,9 +346,10 @@ class FastparquetTests(NumbaIntegrationTestTarget):
     @property
     def conda_dependencies(self):
         return ["numpy pandas pytest "
-                "python-lzo brotli thrift python-snappy lz4 zstandard "
+                "brotli thrift python-snappy lz4 "
                 "s3fs moto pyspark openjdk "
-                "cython setuptools bson "
+                "cython setuptools ",
+                "-c conda-forge bson zstandard python-lzo",
                 ]
 
     def install(self):
