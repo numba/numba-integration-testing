@@ -328,6 +328,40 @@ class SparseTests(NumbaIntegrationTestTarget):
         execute("pytest")
 
 
+class FastparquetTests(NumbaIntegrationTestTarget):
+
+    @property
+    def name(self):
+        return "fastparquet"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/dask/fastparquet.git"
+
+    @property
+    def target_tag(self):
+        return([t for t in git_ls_remote_tags(self.clone_url)
+                if not t == "1.1"][-1])
+
+    @property
+    def conda_dependencies(self):
+        return ["numpy pandas pytest "
+                "python-lzo brotli thrift python-snappy lz4 zstandard "
+                "s3fs moto pyspark openjdk "
+                "cython setuptools bson "
+                ]
+
+    def install(self):
+        execute("python setup.py install")
+
+    def run_tests(self):
+        os.environ["AWS_ACCESS_KEY_ID"] = "1111"
+        os.environ["AWS_SECRET_ACCESS_KEY"] = "2222"
+        execute("python setup.py test")
+        os.environ.pop("AWS_ACCESS_KEY_ID")
+        os.environ.pop("AWS_SECRET_ACCESS_KEY")
+
+
 def bootstrap_miniconda():
     url = miniconda_url()
     if not os.path.exists(MINCONDA_INSTALLER):
