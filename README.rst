@@ -19,13 +19,17 @@ active.
 Tested Projects
 ===============
 
-* `hpat <https://github.com/IntelLabs/hpat>`_
 * `umap <https://umap-learn.readthedocs.io/en/latest/>`_
 * `librosa <https://librosa.github.io/librosa/>`_
 * `clifford <https://clifford.readthedocs.io/en/latest/>`_
 * `awkward-array <https://github.com/scikit-hep/awkward-array>`_
 * `pydata/sparse <https://github.com/pydata/sparse.git>`_
 * `fastparquet <https://github.com/dask/fastparquet>`_
+
+Temporarily Disabled
+====================
+
+* `hpat <https://github.com/IntelLabs/hpat>`_
 
 Usage
 =====

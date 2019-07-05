@@ -58,7 +58,7 @@ workflows:
   version: 2.1
   commit-integration-testing:
     jobs:
-      - hpat
+      # - hpat
       - umap
       - librosa
       - clifford
@@ -67,7 +67,7 @@ workflows:
       - fastparquet
   nightly-integration-testing:
     jobs:
-      - hpat
+      # - hpat
       - umap
       - librosa
       - clifford
