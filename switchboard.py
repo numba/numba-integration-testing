@@ -302,7 +302,7 @@ class LibrosaTests(NumbaIntegrationTestTarget):
     def conda_dependencies(self):
         return [
             "pip numpy scipy coverage scikit-learn matplotlib pytest",
-            "-c conda-forge ffmpeg",
+            "-c conda-forge ffmpeg pysoundfile",
         ]
 
     def install(self):
