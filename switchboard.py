@@ -302,7 +302,7 @@ class LibrosaTests(NumbaIntegrationTestTarget):
     def conda_dependencies(self):
         return [
             "pip numpy scipy coverage scikit-learn matplotlib pytest",
-            "-c conda-forge ffmpeg",
+            "-c conda-forge ffmpeg pysoundfile",
         ]
 
     def install(self):
@@ -409,7 +409,7 @@ class FastparquetTests(NumbaIntegrationTestTarget):
 
     @property
     def conda_dependencies(self):
-        return ["numpy pandas pytest "
+        return ["numpy pandas pytest<5.0.0"
                 "brotli thrift python-snappy lz4 s3fs moto cython setuptools ",
                 "-c conda-forge bson zstandard python-lzo",
                 ]

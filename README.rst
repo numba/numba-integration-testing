@@ -19,7 +19,6 @@ active.
 Tested Projects
 ===============
 
-* `hpat <https://github.com/IntelLabs/hpat>`_
 * `umap <https://umap-learn.readthedocs.io/en/latest/>`_
 * `librosa <https://librosa.github.io/librosa/>`_
 * `clifford <https://clifford.readthedocs.io/en/latest/>`_
@@ -27,6 +26,11 @@ Tested Projects
 * `pydata/sparse <https://github.com/pydata/sparse.git>`_
 * `fastparquet <https://github.com/dask/fastparquet>`_
 * `pygbm <https://github.com/ogrisel/pygbm>`_
+
+Temporarily Disabled
+====================
+
+* `hpat <https://github.com/IntelLabs/hpat>`_
 
 Usage
 =====
