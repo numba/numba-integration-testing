@@ -25,6 +25,7 @@ Tested Projects
 * `awkward-array <https://github.com/scikit-hep/awkward-array>`_
 * `pydata/sparse <https://github.com/pydata/sparse.git>`_
 * `fastparquet <https://github.com/dask/fastparquet>`_
+* `pygbm <https://github.com/ogrisel/pygbm>`_
 
 Temporarily Disabled
 ====================

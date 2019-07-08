@@ -425,6 +425,31 @@ class FastparquetTests(NumbaIntegrationTestTarget):
         os.environ.pop("AWS_SECRET_ACCESS_KEY")
 
 
+class PygbmTests(NumbaIntegrationTestTarget):
+
+    @property
+    def name(self):
+        return "pygbm"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/ogrisel/pygbm.git"
+
+    @property
+    def target_tag(self):
+        return(git_ls_remote_tags(self.clone_url)[-1])
+
+    @property
+    def conda_dependencies(self):
+        return ["scipy scikit-learn pytest joblib lightgbm"]
+
+    def install(self):
+        execute("pip install --editable .")
+
+    def run_tests(self):
+        execute("pytest")
+
+
 def bootstrap_miniconda():
     url = miniconda_url()
     if not os.path.exists(MINCONDA_INSTALLER):
