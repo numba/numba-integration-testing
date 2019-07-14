@@ -14,7 +14,7 @@ commands:
         default: ""
     steps:
       - checkout
-      - run: sudo pip install texasbbq
+      - run: sudo pip install git+https://github.com/numba/texasbbq
       - run: python switchboard.py -t << parameters.target >>
 
 jobs:

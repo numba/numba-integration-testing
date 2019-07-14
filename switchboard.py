@@ -6,11 +6,12 @@ from texasbbq import (main,
                       execute,
                       conda_install,
                       git_ls_remote_tags,
+                      IntegrationTestCondaSource,
                       IntegrationTestProject,
                       )
 
 
-class NumbaSource():
+class NumbaSource(IntegrationTestCondaSource):
 
     module = __name__
 
@@ -18,8 +19,9 @@ class NumbaSource():
     def name(self):
         return "numba"
 
-    def install(self, env):
-        conda_install(env, "-c numba/label/dev numba numpy")
+    @property
+    def conda_package(self):
+        return "-c numba/label/dev numba"
 
 
 class UmapTests(IntegrationTestProject):
