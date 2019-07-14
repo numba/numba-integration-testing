@@ -4,14 +4,14 @@ import os
 
 from texasbbq import (main,
                       execute,
-                      conda_install,
+                      git_clone_ref,
                       git_ls_remote_tags,
-                      IntegrationTestCondaSource,
-                      IntegrationTestProject,
+                      CondaSource,
+                      GitTarget,
                       )
 
 
-class NumbaSource(IntegrationTestCondaSource):
+class NumbaSource(CondaSource):
 
     module = __name__
 
@@ -24,7 +24,7 @@ class NumbaSource(IntegrationTestCondaSource):
         return "-c numba/label/dev numba"
 
 
-class UmapTests(IntegrationTestProject):
+class UmapTests(GitTarget):
     @property
     def name(self):
         return "umap"
@@ -34,7 +34,7 @@ class UmapTests(IntegrationTestProject):
         return "https://github.com/lmcinnes/umap"
 
     @property
-    def target_tag(self):
+    def git_ref(self):
         return([t for t in git_ls_remote_tags(self.clone_url) if not
                 t.startswith("v")][-1])
 
@@ -42,33 +42,35 @@ class UmapTests(IntegrationTestProject):
     def conda_dependencies(self):
         return ["numpy scikit-learn scipy nose"]
 
-    def install(self):
-        execute("pip install -e .")
-
-    def run_tests(self):
-        execute("nosetests -s umap")
-
-
-class HpatTests(IntegrationTestProject):
     @property
-    def name(self):
-        return "hpat"
+    def install_command(self):
+        return "pip install -e ."
 
     @property
-    def conda_dependencies(self):
-        return ["pyspark openjdk scipy", "-c ehsantn h5py"]
-
-    def install(self):
-        conda_install(
-            self.name, "-c ehsantn -c anaconda -c conda-forge hpat"
-        )
-
-    def run_tests(self):
-        execute("python -m hpat.tests.gen_test_data")
-        execute("python -m hpat.runtests")
+    def test_command(self):
+        return "nosetests -s umap"
 
 
-class LibrosaTests(IntegrationTestProject):
+#class HpatTests(GitTarget):
+#    @property
+#    def name(self):
+#        return "hpat"
+#
+#    @property
+#    def conda_dependencies(self):
+#        return ["pyspark openjdk scipy", "-c ehsantn h5py"]
+#
+#    def install(self):
+#        conda_install(
+#            self.name, "-c ehsantn -c anaconda -c conda-forge hpat"
+#        )
+#
+#    def run_tests(self):
+#        execute("python -m hpat.tests.gen_test_data")
+#        execute("python -m hpat.runtests")
+
+
+class LibrosaTests(GitTarget):
     @property
     def name(self):
         return "librosa"
@@ -78,7 +80,7 @@ class LibrosaTests(IntegrationTestProject):
         return "https://github.com/librosa/librosa.git"
 
     @property
-    def target_tag(self):
+    def git_ref(self):
         return([t for t in git_ls_remote_tags(self.clone_url) if not
                 t.startswith("v")][-1])
 
@@ -89,14 +91,16 @@ class LibrosaTests(IntegrationTestProject):
             "-c conda-forge ffmpeg pysoundfile",
         ]
 
-    def install(self):
-        execute("pip install --pre -e .[tests]")
+    @property
+    def install_command(self):
+        return "pip install --pre -e .[tests]"
 
-    def run_tests(self):
-        execute("pytest")
+    @property
+    def test_command(self):
+        return "pytest"
 
 
-class CliffordTests(IntegrationTestProject):
+class CliffordTests(GitTarget):
 
     @property
     def name(self):
@@ -107,7 +111,7 @@ class CliffordTests(IntegrationTestProject):
         return "https://github.com/pygae/clifford.git"
 
     @property
-    def target_tag(self):
+    def git_ref(self):
         return(git_ls_remote_tags(self.clone_url)[-1])
 
     @property
@@ -116,14 +120,16 @@ class CliffordTests(IntegrationTestProject):
             "future numpy scipy numba pip nose h5py",
         ]
 
-    def install(self):
-        execute("python setup.py install")
+    @property
+    def install_command(self):
+        return "python setup.py install"
 
-    def run_tests(self):
-        execute("nosetests")
+    @property
+    def test_command(self):
+        return "nosetests"
 
 
-class AwkwardTests(IntegrationTestProject):
+class AwkwardTests(GitTarget):
     @property
     def name(self):
         return "awkward"
@@ -133,7 +139,7 @@ class AwkwardTests(IntegrationTestProject):
         return "https://github.com/scikit-hep/awkward-array"
 
     @property
-    def target_tag(self):
+    def git_ref(self):
         return([t for t in git_ls_remote_tags(self.clone_url)
                 if "rc" not in t][-1])
 
@@ -141,17 +147,25 @@ class AwkwardTests(IntegrationTestProject):
     def conda_dependencies(self):
         return ["numpy pytest"]
 
+    # awkward has a unique, multi-command install
     def install(self):
-        execute("python setup.py install")
+        if not os.path.exists(self.name):
+            git_clone_ref(self.clone_url, self.git_ref, self.name)
+        os.chdir(self.name)
+        execute("conda run -n {} {}".format(self.name,
+                                            "python setup.py install"))
         os.chdir("awkward-numba")
-        execute("python setup.py install")
-        os.chdir("..")
+        execute("conda run -n {} {}".format(self.name,
+                                            "python setup.py install"))
+        os.chdir('../../')
 
-    def run_tests(self):
-        execute("pytest -v tests/test_numba.py")   # only the test that uses Numba
+    @property
+    def test_command(self):
+        # only the test that uses Numba
+        return "pytest -v tests/test_numba.py"
 
 
-class SparseTests(IntegrationTestProject):
+class SparseTests(GitTarget):
 
     @property
     def name(self):
@@ -162,21 +176,23 @@ class SparseTests(IntegrationTestProject):
         return "https://github.com/pydata/sparse.git"
 
     @property
-    def target_tag(self):
+    def git_ref(self):
         return git_ls_remote_tags(self.clone_url)[-1]
 
     @property
     def conda_dependencies(self):
         return ["pip numpy scipy"]
 
-    def install(self):
-        execute("pip install -e .[all]")
+    @property
+    def install_command(self):
+        return "pip install -e .[all]"
 
-    def run_tests(self):
-        execute("pytest")
+    @property
+    def test_command(self):
+        return "pytest"
 
 
-class FastparquetTests(IntegrationTestProject):
+class FastparquetTests(GitTarget):
 
     @property
     def name(self):
@@ -187,7 +203,7 @@ class FastparquetTests(IntegrationTestProject):
         return "https://github.com/dask/fastparquet.git"
 
     @property
-    def target_tag(self):
+    def git_ref(self):
         return([t for t in git_ls_remote_tags(self.clone_url)
                 if not t == "1.1"][-1])
 
@@ -198,18 +214,24 @@ class FastparquetTests(IntegrationTestProject):
                 "-c conda-forge bson zstandard python-lzo",
                 ]
 
-    def install(self):
-        execute("python setup.py install")
+    @property
+    def install_command(self):
+        return "python setup.py install"
 
-    def run_tests(self):
+    @property
+    def test_command(self):
+        return "python setup.py test"
+
+    # Tetsts need to futz about with the environment
+    def test(self):
         os.environ["AWS_ACCESS_KEY_ID"] = "1111"
         os.environ["AWS_SECRET_ACCESS_KEY"] = "2222"
-        execute("python setup.py test")
+        super().test()
         os.environ.pop("AWS_ACCESS_KEY_ID")
         os.environ.pop("AWS_SECRET_ACCESS_KEY")
 
 
-class PygbmTests(IntegrationTestProject):
+class PygbmTests(GitTarget):
 
     @property
     def name(self):
@@ -220,18 +242,20 @@ class PygbmTests(IntegrationTestProject):
         return "https://github.com/ogrisel/pygbm.git"
 
     @property
-    def target_tag(self):
+    def git_ref(self):
         return(git_ls_remote_tags(self.clone_url)[-1])
 
     @property
     def conda_dependencies(self):
         return ["scipy scikit-learn pytest joblib lightgbm"]
 
-    def install(self):
-        execute("pip install --editable .")
+    @property
+    def install_command(self):
+        return "pip install --editable ."
 
-    def run_tests(self):
-        execute("pytest")
+    @property
+    def test_command(self):
+        return "pytest"
 
 
 if __name__ == "__main__":
