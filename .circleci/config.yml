@@ -15,7 +15,9 @@ commands:
     steps:
       - checkout
       - run: sudo pip install git+https://github.com/numba/texasbbq
-      - run: python switchboard.py -t << parameters.target >>
+      - run:
+          command: python switchboard.py -t << parameters.target >>
+          no_output_timeout: 42m
 
 jobs:
   hpat:
