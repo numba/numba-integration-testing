@@ -260,7 +260,7 @@ class DatashaderTests(NumbaIntegrationTestTarget):
 
     @property
     def conda_dependencies(self):
-        return ["pytest >=3.9.3", "fastparquet >=0.1.6", "pytest-benchmark >=3.0.0"]
+        return ["pytest>=3.9.3", "fastparquet>=0.1.6", "pytest-benchmark>=3.0.0"]
 
     @property
     def install_command(self):
@@ -269,110 +269,6 @@ class DatashaderTests(NumbaIntegrationTestTarget):
     @property
     def test_command(self):
         execute("pytest datashader")
-
-
-def bootstrap_miniconda():
-    url = miniconda_url()
-    if not os.path.exists(MINCONDA_INSTALLER):
-        wget_conda(url, MINCONDA_INSTALLER)
-    if not os.path.exists(MINCONDA_FULL_PATH):
-        install_miniconda(MINCONDA_FULL_PATH)
-    inject_conda_path()
-    conda_update_conda()
-
-
-def setup_git(target):
-    if target.needs_clone:
-        if not os.path.exists(target.name):
-            git_clone_tag(target.clone_url, target.target_tag, target.name)
-        os.chdir(target.name)
-
-
-def setup_environment(target):
-    if target.name not in conda_environments():
-        conda_create_env(target.name)
-        conda_install_numba_dev(target.name)
-        for dep in target.conda_dependencies:
-            conda_install(target.name, dep)
-
-
-def switch_environment(target):
-    switch_environment_path(target.name)
-
-
-def print_environment_details(target):
-    execute("conda env export -n {}".format(target.name))
-    execute("numba -s")
-
-
-def find_all_targets():
-    return [
-        obj()
-        for name, obj in inspect.getmembers(sys.modules[__name__])
-        if inspect.isclass(obj)
-        and issubclass(obj, NumbaIntegrationTestTarget)
-        and obj is not NumbaIntegrationTestTarget
-    ]
-
-
-AVAILABLE_TARGETS = dict(
-    (target.name, target) for target in find_all_targets()
-)
-
-
-def parse_arguments():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-s",
-        "--stages",
-        nargs="*",
-        type=str,
-        choices=ALL_STAGES,
-        default=ALL_STAGES,
-        metavar="STAGE",
-    )
-    parser.add_argument(
-        "-t",
-        "--targets",
-        nargs="*",
-        type=str,
-        choices=list(AVAILABLE_TARGETS.keys()),
-        default=list(AVAILABLE_TARGETS.keys()),
-        metavar="TARGET",
-    )
-    return parser.parse_args()
-
-
-def main(stages, targets):
-    failed = []
-    basedir = os.getcwd()
-    if STAGE_MINICONDA in stages:
-        bootstrap_miniconda()
-    else:
-        inject_conda_path()
-    for name, target in AVAILABLE_TARGETS.items():
-        if name in targets:
-            os.chdir(basedir)
-            if STAGE_CLONE in stages:
-                setup_git(target)
-            if STAGE_ENVIRONMENT in stages:
-                setup_environment(target)
-            switch_environment(target)
-            if STAGE_INSTALL in stages:
-                target.install()
-            print_environment_details(target)
-            if STAGE_TESTS in stages:
-                try:
-                    target.run_tests()
-                except subprocess.CalledProcessError:
-                    failed.append(target.name)
-    if STAGE_TESTS in stages:
-        if failed:
-            echo("The following tests failed: '{}'".format(failed))
-            sys.exit(23)
-        else:
-            echo("All integration tests successful")
->>>>>>> Add datashader integration tests
 
 
 if __name__ == "__main__":
