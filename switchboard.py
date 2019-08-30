@@ -131,39 +131,25 @@ class CliffordTests(GitTarget):
 
 
 class AwkwardTests(GitTarget):
+
     @property
     def name(self):
         return "awkward"
 
-    @property
-    def clone_url(self):
-        return "https://github.com/scikit-hep/awkward-array"
-
-    @property
-    def git_ref(self):
-        return([t for t in git_ls_remote_tags(self.clone_url)
-                if "rc" not in t][-1])
+    def clone(self):
+        execute("git clone https://github.com/jpivarski/awkward-1.0.git --recursive")
 
     @property
     def conda_dependencies(self):
-        return ["numpy pytest"]
+        return ["numpy numba pytest make cmake"]
 
-    # awkward has a unique, multi-command install
-    def install(self):
-        if not os.path.exists(self.name):
-            git_clone_ref(self.clone_url, self.git_ref, self.name)
-        os.chdir(self.name)
-        execute("conda run -n {} {}".format(self.name,
-                                            "python setup.py install"))
-        os.chdir("awkward-numba")
-        execute("conda run -n {} {}".format(self.name,
-                                            "python setup.py install"))
-        os.chdir('../../')
+    @property
+    def install_command(self):
+        return "python setup.py build"
 
     @property
     def test_command(self):
-        # only the test that uses Numba
-        return "pytest -v tests/test_numba.py"
+        return "pytest -vv tests"
 
 
 class SparseTests(GitTarget):
