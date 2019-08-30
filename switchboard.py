@@ -190,7 +190,7 @@ class SparseTests(GitTarget):
 
     @property
     def test_command(self):
-        return "pytest"
+        return "pytest --pyargs sparse"
 
 
 class FastparquetTests(GitTarget):
