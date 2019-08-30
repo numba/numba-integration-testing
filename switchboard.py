@@ -137,7 +137,7 @@ class AwkwardTests(GitTarget):
         return "awkward"
 
     def clone(self):
-        execute("git clone https://github.com/jpivarski/awkward-1.0.git --recursive")
+        execute("git clone https://github.com/jpivarski/awkward-1.0.git --recursive awkward")
 
     @property
     def conda_dependencies(self):
