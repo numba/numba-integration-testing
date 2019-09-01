@@ -259,5 +259,33 @@ class PygbmTests(GitTarget):
         return "pytest"
 
 
+class PoliastroTests(GitTarget):
+
+    @property
+    def name(self):
+        return "poliastro"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/poliastro/poliastro.git"
+
+    @property
+    def git_ref(self):
+        return(git_ls_remote_tags(self.clone_url)[-1])
+
+    @property
+    def conda_dependencies(self):
+        return ["astropy matplotlib numba numpy pandas plotly scipy",
+                "-c conda-forge jplephem astroquery"]
+
+    @property
+    def install_command(self):
+        return "python setup.py install"
+
+    @property
+    def test_command(self):
+        return "pytest"
+
+
 if __name__ == "__main__":
     main(NumbaSource())
