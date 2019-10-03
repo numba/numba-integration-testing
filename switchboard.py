@@ -247,7 +247,7 @@ class PygbmTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["scipy scikit-learn pytest joblib lightgbm"]
+        return ["scipy=1.1.0 scikit-learn pytest joblib lightgbm"]
 
     @property
     def install_command(self):
