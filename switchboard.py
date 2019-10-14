@@ -117,7 +117,7 @@ class CliffordTests(GitTarget):
     @property
     def conda_dependencies(self):
         return [
-            "future numpy scipy numba pip nose h5py",
+            "numpy scipy numba pip h5py",
         ]
 
     @property
@@ -126,7 +126,7 @@ class CliffordTests(GitTarget):
 
     @property
     def test_command(self):
-        return "nosetests"
+        return "pytest -v clifford/test"
 
 
 class AwkwardTests(GitTarget):
