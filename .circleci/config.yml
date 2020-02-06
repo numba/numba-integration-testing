@@ -14,7 +14,7 @@ commands:
         default: ""
     steps:
       - checkout
-      - run: sudo pip install git+https://github.com/numba/texasbbq
+      - run: sudo pip install git+https://github.com/esc/texasbbq.git@hotfix/pin_conda_4.7
       - run:
           command: python switchboard.py -t << parameters.target >>
           no_output_timeout: 42m
