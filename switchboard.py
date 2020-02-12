@@ -40,7 +40,7 @@ class UmapTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["numpy scikit-learn scipy nose"]
+        return ["numpy scikit-learn scipy nose pandas datashader holoviews"]
 
     @property
     def install_command(self):
