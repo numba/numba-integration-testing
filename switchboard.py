@@ -141,16 +141,15 @@ class AwkwardTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["numpy numba pytest make cmake"]
+        return ["numpy pytest make cmake"]
 
     @property
     def install_command(self):
-        return "python setup.py build"
+        return "true"
 
     @property
     def test_command(self):
-        return "pytest -vv tests"
-
+        return "python localbuild.py --pytest tests"
 
 class SparseTests(GitTarget):
 
