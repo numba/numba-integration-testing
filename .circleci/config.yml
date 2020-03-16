@@ -68,23 +68,11 @@ workflows:
   commit-integration-testing:
     jobs:
       # - hpat
-      - umap
-      - librosa
-      - clifford
       - awkward
-      - sparse
-      - fastparquet
-      - pygbm
   nightly-integration-testing:
     jobs:
       # - hpat
-      - umap
-      - librosa
-      - clifford
       - awkward
-      - sparse
-      - fastparquet
-      - pygbm
     triggers:
       - schedule:
           cron: "0 5 * * *"

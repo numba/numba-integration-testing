@@ -21,7 +21,7 @@ class NumbaSource(CondaSource):
 
     @property
     def conda_package(self):
-        return "-c numba/label/dev numba"
+        return "numba"
 
 
 class UmapTests(GitTarget):
