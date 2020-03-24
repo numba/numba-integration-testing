@@ -36,7 +36,7 @@ class NumbaSource(GitSource):
 
     @property
     def install_command(self):
-        return "python setup.py build_ext -i && python setup.py develop"
+        return "python setup.py build_ext -i && python setup.py develop --no-deps"
 
 
 class UmapTests(GitTarget):
