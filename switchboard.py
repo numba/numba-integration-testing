@@ -244,7 +244,7 @@ class PygbmTests(GitTarget):
         return "pytest"
 
 
-class DatashaderTests(NumbaIntegrationTestTarget):
+class DatashaderTests(GitTarget):
 
     @property
     def name(self):
