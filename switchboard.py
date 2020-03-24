@@ -244,5 +244,32 @@ class PygbmTests(GitTarget):
         return "pytest"
 
 
+class DatashaderTests(GitTarget):
+
+    @property
+    def name(self):
+        return "datashader"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/holoviz/datashader.git"
+    
+    @property
+    def git_ref(self):
+        return(git_ls_remote_tags(self.clone_url)[-1])
+
+    @property
+    def conda_dependencies(self):
+        return ["python<3.8", "pytest>=3.9.3", "fastparquet>=0.1.6", "pytest-benchmark>=3.0.0"]
+
+    @property
+    def install_command(self):
+        return "pip install -e ."
+
+    @property
+    def test_command(self):
+        execute("pytest datashader")
+
+
 if __name__ == "__main__":
     main(NumbaSource())

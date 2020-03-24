@@ -61,6 +61,11 @@ jobs:
     steps:
       - run-target:
           target: "pygbm"
+  datashader:
+    executor: test-executor
+    steps:
+      - run-target:
+          target: "datashader"
 
 
 workflows:
@@ -75,6 +80,7 @@ workflows:
       - sparse
       - fastparquet
       - pygbm
+      - datashader
   nightly-integration-testing:
     jobs:
       # - hpat
@@ -85,6 +91,7 @@ workflows:
       - sparse
       - fastparquet
       - pygbm
+      - datashader
     triggers:
       - schedule:
           cron: "0 5 * * *"
