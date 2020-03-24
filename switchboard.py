@@ -260,7 +260,7 @@ class DatashaderTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["pytest>=3.9.3", "fastparquet>=0.1.6", "pytest-benchmark>=3.0.0"]
+        return ["python<3.8", "pytest>=3.9.3", "fastparquet>=0.1.6", "pytest-benchmark>=3.0.0"]
 
     @property
     def install_command(self):
