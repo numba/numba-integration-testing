@@ -138,7 +138,7 @@ class CliffordTests(GitTarget):
 
     @property
     def install_command(self):
-        return "python setup.py install --no-deps"
+        return "python setup.py develop --no-deps"
 
     @property
     def test_command(self):
