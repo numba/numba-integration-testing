@@ -21,7 +21,7 @@ class NumbaSource(GitSource):
 
     @property
     def clone_url(self):
-        return "git://github.com/stuartarchibald/numba"
+        return "git://github.com/esc/numba"
 
     @property
     def git_ref(self):
