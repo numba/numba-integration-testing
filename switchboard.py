@@ -21,11 +21,11 @@ class NumbaSource(GitSource):
 
     @property
     def clone_url(self):
-        return "git://github.com/esc/numba"
+        return "git://github.com/stuartarchibald/numba"
 
     @property
     def git_ref(self):
-        return "wip/refactor_shim_1"
+        return "wip/deprecate_jitclass_location"
 
     @property
     def conda_dependencies(self):
