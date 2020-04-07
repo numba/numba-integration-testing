@@ -56,7 +56,14 @@ Normally, Numba is installed as a conda packge from https://anaconda.org using
 a ``CondaSource`` configuration. Sometimes it can be useful to run the
 integration-testing from a branch or a pull-request however. The following
 configuration demonstrates how to obtain the branch ``refactor_it``
-from the Github fork at ``github.com/esc/numba``:
+from the Github fork at ``github.com/esc/numba``.
+
+Please be advised that you must mirror the tags of the blessed Numba
+repository at ``github.com/numba/numba`` to the desired fork in such cases.
+This is because the Numba version is determined from the closest reachable
+tag in the Git history so recent tags must be present for the build system
+to accurately determine the Numba version. Otherwise you may end up with a
+nonsensical version number that is likely to confuse.
 
 .. code:: python
 
