@@ -5,7 +5,6 @@ from packaging.version import parse
 
 from texasbbq import (main,
                       execute,
-                      git_clone_ref,
                       git_ls_remote_tags,
                       git_latest_tag,
                       CondaSource,
@@ -52,25 +51,6 @@ class UmapTests(GitTarget):
     @property
     def test_command(self):
         return "pytest"
-
-
-#class HpatTests(GitTarget):
-#    @property
-#    def name(self):
-#        return "hpat"
-#
-#    @property
-#    def conda_dependencies(self):
-#        return ["pyspark openjdk scipy", "-c ehsantn h5py"]
-#
-#    def install(self):
-#        conda_install(
-#            self.name, "-c ehsantn -c anaconda -c conda-forge hpat"
-#        )
-#
-#    def run_tests(self):
-#        execute("python -m hpat.tests.gen_test_data")
-#        execute("python -m hpat.runtests")
 
 
 class LibrosaTests(GitTarget):
@@ -139,7 +119,8 @@ class AwkwardTests(GitTarget):
         return "awkward"
 
     def clone(self):
-        execute("git clone https://github.com/scikit-hep/awkward-1.0.git --recursive awkward")
+        execute("git clone https://github.com/scikit-hep/awkward-1.0.git "
+                "--recursive awkward")
 
     @property
     def conda_dependencies(self):
