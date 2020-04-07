@@ -28,12 +28,7 @@ Tested Projects
 * `pydata/sparse <https://github.com/pydata/sparse.git>`_
 * `fastparquet <https://github.com/dask/fastparquet>`_
 * `pygbm <https://github.com/ogrisel/pygbm>`_
-
-Temporarily Disabled
-====================
-
-* `hpat <https://github.com/IntelLabs/hpat>`_
-
+* `datashader <https://github.com/holoviz/datashader>`_
 
 Adding a new Target
 ===================
