@@ -8,7 +8,7 @@ latests releases of specific dependents, i.e. libraries that make heavy use of
 Numba. The target Numba version to test with, will be the latest version of the
 git ``master`` branch where the test suite passed. Configurations for both
 `CircleCI <https://circleci.com/>`_  and `Travis CI <https://travis-ci.org/>`_
-are provided but currently (April 2019) only the CircleCI configuration is
+are provided but currently (April 2020) only the CircleCI configuration is
 active.
 
 :CircleCI: |circleci|
