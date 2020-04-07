@@ -58,7 +58,7 @@ integration-testing from a branch or a pull-request however. The following
 configuration demonstrates how to obtain the branch ``refactor_it``
 from the Github fork at ``github.com/esc/numba``:
 
-.. code::
+.. code:: python
 
     class NumbaSource(GitSource):
 
