@@ -30,6 +30,10 @@ class NumbaSource(GitSource):
                 "gcc_linux-64 gxx_linux-64",
                 ]
     @property
+    def conda_force_remove_packages(self):
+        return ["numba llvmlite"]
+
+    @property
     def install_command(self):
         return ("python setup.py build_ext -i && "
                 "python setup.py develop --no-deps")

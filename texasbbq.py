@@ -215,6 +215,15 @@ class GitSource(object):
         """
         raise NotImplementedError
 
+    def conda_force_remove(self, env):
+        for p in self.conda_force_remove_packages:
+            execute("conda remove -n {}, --force {} ".format(env, p))
+
+    @property
+    def conda_force_remove_packages(self):
+        raise NotImplementedError()
+
+
     @property
     def install_command(self):
         """Execute command to install the source.
@@ -478,6 +487,7 @@ def run(source, stages, available_targets, targets):
             os.chdir(basedir)
             if STAGE_ENVIRONMENT in stages:
                 setup_environment(target)
+                source.conda_force_remove(target.name)
             if STAGE_INSTALL_SOURCE in stages:
                 source.install(target.name)
             switch_environment(target)
