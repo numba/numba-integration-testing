@@ -67,6 +67,9 @@ nonsensical version number that is likely to confuse.
 
 .. code:: python
 
+    from texasbbq import GitSource
+
+
     class NumbaSource(GitSource):
 
         module = __name__
@@ -92,8 +95,8 @@ nonsensical version number that is likely to confuse.
 
         @property
         def install_command(self):
-            return "python setup.py build_ext -i && "
-                   "python setup.py develop --no-deps"
+            return ("python setup.py build_ext -i && "
+                    "python setup.py develop --no-deps")
 
 License
 =======
