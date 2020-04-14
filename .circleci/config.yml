@@ -15,6 +15,7 @@ commands:
     steps:
       - checkout
       - run: sudo pip install --upgrade pip
+      - run: sudo pip install git+https://github.com/esc/texasbbq@enh/force_remove_before_install
       - run:
           command: python switchboard.py -t << parameters.target >>
           no_output_timeout: 42m
