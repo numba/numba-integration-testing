@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import re
 
 from texasbbq import (main,
                       execute,
@@ -255,10 +256,29 @@ class DatashaderTests(GitTarget):
     @property
     def clone_url(self):
         return "https://github.com/holoviz/datashader.git"
-    
+
     @property
     def git_ref(self):
-        return(git_ls_remote_tags(self.clone_url)[-1])
+        """ Datashader needs some logic to determine the latest release. """
+        # Set the maximum version to be v0.0.0
+        max = (0, 0, 0)
+        # Regex to find the "v<MAJOR>.<MINOR>.<PATCH>"
+        # (This excludes tags like "website" or alpha releases such as
+        # "v0.11.0a1")
+        pattern = re.compile("^v(\d+)\.(\d+)\.(\d+)$")
+        # Iterate over all tags that exist on the remote side.
+        for tag in git_ls_remote_tags(self.clone_url):
+            # Could maybe use walrus?
+            m = pattern.match(tag)
+            # If the tag matches.
+            if m is not None:
+                # Convert from tuple of string to tuple of int.
+                val = tuple([int(v) for v in m.groups()])
+                # Keep if bigger than all previously seen ones.
+                if val > max:
+                    max = val
+        # Convert max value from tuple of ints to string with "v" prefix.
+        return "v" + ".".join([str(m) for m in max])
 
     @property
     def conda_dependencies(self):
