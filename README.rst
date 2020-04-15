@@ -49,6 +49,55 @@ In order to add a new target, you need to:
   tested.
 * Submit a pull-request on Github.
 
+Testing a Branch or Pull-Request
+================================
+
+Normally, Numba is installed as a conda packge from https://anaconda.org using
+a ``CondaSource`` configuration. However, sometimes it can be useful to run the
+integration-testing from a branch or a pull-request. The following
+configuration demonstrates how to obtain the branch ``refactor_it`` from the
+Github fork at ``github.com/esc/numba``.
+
+Please be advised that you must mirror the tags of the upstream Numba
+repository at ``github.com/numba/numba`` to the desired fork in such cases.
+This is because the Numba version is determined from the closest reachable
+tag in the Git history so recent tags must be present for the build system
+to accurately determine the Numba version. Otherwise you may end up with a
+nonsensical version number that is likely to cause confusion.
+
+.. code:: python
+
+    from texasbbq import GitSource
+
+
+    class NumbaSource(GitSource):
+
+        module = __name__
+
+        @property
+        def name(self):
+            return "numba"
+
+        @property
+        def clone_url(self):
+            return "git://github.com/esc/numba"
+
+        @property
+        def git_ref(self):
+            return "refactor_it"
+
+        @property
+        def conda_dependencies(self):
+            return ["-c numba/label/dev llvmlite",
+                    "numpy pyyaml colorama scipy jinja2 cffi ipython ",
+                    "gcc_linux-64 gxx_linux-64",
+                    ]
+
+        @property
+        def install_command(self):
+            return ("python setup.py build_ext -i && "
+                    "python setup.py develop --no-deps")
+
 License
 =======
 
