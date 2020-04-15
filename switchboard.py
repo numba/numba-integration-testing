@@ -6,12 +6,12 @@ from texasbbq import (main,
                       execute,
                       git_clone_ref,
                       git_ls_remote_tags,
-                      CondaSource,
+                      GitSource,
                       GitTarget,
                       )
 
 
-class NumbaSource(CondaSource):
+class NumbaSource(GitSource):
 
     module = __name__
 
@@ -20,8 +20,24 @@ class NumbaSource(CondaSource):
         return "numba"
 
     @property
-    def conda_package(self):
-        return "-c numba/label/dev numba"
+    def clone_url(self):
+        return "git://github.com/numba/numba"
+
+    @property
+    def git_ref(self):
+        return "release0.49"
+
+    @property
+    def conda_dependencies(self):
+        return ["-c numba/label/dev llvmlite",
+                "numpy pyyaml colorama scipy jinja2 cffi ipython ",
+                "gcc_linux-64 gxx_linux-64",
+                ]
+
+    @property
+    def install_command(self):
+        return ("python setup.py build_ext -i && "
+                "python setup.py develop --no-deps")
 
 
 class UmapTests(GitTarget):
