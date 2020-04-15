@@ -282,7 +282,10 @@ class DatashaderTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["python<3.8", "pytest>=3.9.3", "fastparquet>=0.1.6", "pytest-benchmark>=3.0.0", "bokeh<2.0"]
+        return ["python<3.8 bokeh<2.0 codecov colorcet dask[complete] "
+                "datashape fastparquet flake8 nbsmoke numpy pandas pandas "
+                "param pillow pyct[cmd] pytest pytest-benchmark pytest-cov "
+                "scikit-image scipy toolz xarray"]
 
     @property
     def install_command(self):
