@@ -260,25 +260,45 @@ class DatashaderTests(GitTarget):
     @property
     def git_ref(self):
         """ Datashader needs some logic to determine the latest release. """
-        # Set the maximum version to be v0.0.0
-        max = (0, 0, 0)
+        # Set the maximum version to be v0.0.0a0
+        max_version = (0, 0, 0)
+        max_alpha = None
         # Regex to find the "v<MAJOR>.<MINOR>.<PATCH>"
-        # (This excludes tags like "website" or alpha releases such as
-        # "v0.11.0a1")
-        pattern = re.compile("^v(\d+)\.(\d+)\.(\d+)$")
+        pattern_regular = re.compile("^v(\d+)\.(\d+)\.(\d+)$")
+        # Regex to find the "v<MAJOR>.<MINOR>.<PATCH>.a<ALPHA>"
+        pattern_alpha = re.compile("^v(\d+)\.(\d+)\.(\d+)a(\d+)$")
         # Iterate over all tags that exist on the remote side.
         for tag in git_ls_remote_tags(self.clone_url):
             # Could maybe use walrus?
-            m = pattern.match(tag)
+            regular = pattern_regular.match(tag)
+            alpha = pattern_alpha.match(tag)
             # If the tag matches.
-            if m is not None:
+            if regular:
                 # Convert from tuple of string to tuple of int.
-                val = tuple([int(v) for v in m.groups()])
+                version = tuple([int(v) for v in regular.groups()])
                 # Keep if bigger than all previously seen ones.
-                if val > max:
-                    max = val
+                if version > max_version:
+                    max_version = version
+                    max_alpha = None
+            elif alpha:
+                # Convert from tuple of string to tuple of int.
+                version = tuple([int(v) for v in alpha.groups()[:3]])
+                alpha = int(alpha.groups()[3])
+                # Keep if bigger than all previously seen ones.
+                if version > max_version:
+                    max_version = version
+                    max_alpha = alpha
+                # Maybe only a difference in alpha
+                elif version == max_version:
+                    if max_alpha is None:
+                        max_version = version
+                        max_alpha = alpha
+                    elif alpha > max_alpha:
+                        max_version = version
+                        max_alpha = alpha
         # Convert max value from tuple of ints to string with "v" prefix.
-        return "v" + ".".join([str(m) for m in max])
+        alpha_string = "" if max_alpha is None else "a" + str(max_alpha)
+        return "v" + ".".join([str(m) for m in max_version]) + alpha_string
 
     @property
     def conda_dependencies(self):
