@@ -290,7 +290,7 @@ class DatashaderTests(GitTarget):
 
     @property
     def test_command(self):
-        execute("pytest datashader")
+        return "pytest datashader"
 
 
 if __name__ == "__main__":
