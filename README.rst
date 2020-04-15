@@ -96,5 +96,5 @@ nonsensical version number that is likely to cause confusion.
 License
 =======
 
-Copyright 2019-2020 Anaconda Inc. Licensed under the terms of the BSD
-two-clause license. See the file ``LICENSE`` for details.
+Copyright 2019 Anaconda Inc. Licensed under the terms of the BSD two-clause
+license. See the file ``LICENSE`` for details.
