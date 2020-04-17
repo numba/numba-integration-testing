@@ -2,6 +2,7 @@
 
 import os
 import re
+from packaging.version import parse
 
 from texasbbq import (main,
                       execute,
@@ -259,49 +260,8 @@ class DatashaderTests(GitTarget):
 
     @property
     def git_ref(self):
-        """ Datashader needs some logic to determine the latest release. """
-        # Set the maximum version to be v0.0.0 w/o an alpha
-        max_version, max_alpha = (0, 0, 0), None
-        # Regex to find the "v<MAJOR>.<MINOR>.<PATCH>"
-        pattern_regular = re.compile("^v(\d+)\.(\d+)\.(\d+)$")
-        # Regex to find the "v<MAJOR>.<MINOR>.<PATCH>.a<ALPHA>"
-        pattern_alpha = re.compile("^v(\d+)\.(\d+)\.(\d+)a(\d+)$")
-        # Iterate over all tags that exist on the remote side.
-        for tag in git_ls_remote_tags(self.clone_url):
-            # Check if any patter matches
-            regular = pattern_regular.match(tag)
-            alpha = pattern_alpha.match(tag)
-            # If the tag matches.
-            if regular:
-                # Convert from tuple of string to tuple of int.
-                version = tuple([int(v) for v in regular.groups()])
-                # Keep if bigger than all previously seen ones.
-                if version > max_version:
-                    max_version = version
-                    max_alpha = None
-            elif alpha:
-                # Convert from tuple of string to tuple of int.
-                version = tuple([int(v) for v in alpha.groups()[:3]])
-                alpha = int(alpha.groups()[3])
-                # Keep if bigger than all previously seen ones.
-                if version > max_version:
-                    max_version = version
-                    max_alpha = alpha
-                # Maybe only a difference in alpha.
-                elif version == max_version:
-                    # Previous maximum had no alpha.
-                    if max_alpha is None:
-                        max_version = version
-                        max_alpha = alpha
-                    # Previous maximum had smaller alpha
-                    elif alpha > max_alpha:
-                        max_version = version
-                        max_alpha = alpha
-        # Determine the alpha suffix, if there is any.
-        alpha_string = "" if max_alpha is None else "a" + str(max_alpha)
-        # Convert max value from tuple of ints to string with "v" prefix and
-        # alpha.
-        return "v" + ".".join([str(m) for m in max_version]) + alpha_string
+        return str(sorted([parse(t)
+                   for t in git_ls_remote_tags(self.clone_url)])[-1])
 
     @property
     def conda_dependencies(self):
