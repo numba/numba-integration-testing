@@ -260,7 +260,7 @@ class DatashaderTests(GitTarget):
 
     @property
     def git_ref(self):
-        return str(sorted([parse(t)
+        return "v" + str(sorted([parse(t)
                    for t in git_ls_remote_tags(self.clone_url)])[-1])
 
     @property
