@@ -165,7 +165,7 @@ class SparseTests(GitTarget):
 
     @property
     def git_ref(self):
-        return git_latest_tag(self.clone_url)
+        return git_latest_tag(self.clone_url, vprefix=False)
 
     @property
     def conda_dependencies(self):
