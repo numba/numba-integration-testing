@@ -6,6 +6,7 @@ from texasbbq import (main,
                       execute,
                       git_clone_ref,
                       git_ls_remote_tags,
+                      git_latest_tag,
                       CondaSource,
                       GitTarget,
                       )
@@ -164,7 +165,7 @@ class SparseTests(GitTarget):
 
     @property
     def git_ref(self):
-        return git_ls_remote_tags(self.clone_url)[-1]
+        return git_latest_tag(self.clone_url, vprefix=False)
 
     @property
     def conda_dependencies(self):
