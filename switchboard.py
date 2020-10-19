@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import os
-import re
 from packaging.version import parse
 
 from texasbbq import (main,
