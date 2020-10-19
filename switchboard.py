@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+from packaging.version import parse
 
 from texasbbq import (main,
                       execute,
@@ -255,14 +256,18 @@ class DatashaderTests(GitTarget):
     @property
     def clone_url(self):
         return "https://github.com/holoviz/datashader.git"
-    
+
     @property
     def git_ref(self):
-        return(git_ls_remote_tags(self.clone_url)[-1])
+        return "v" + str(sorted([parse(t)
+                   for t in git_ls_remote_tags(self.clone_url)])[-1])
 
     @property
     def conda_dependencies(self):
-        return ["python<3.8", "pytest>=3.9.3", "fastparquet>=0.1.6", "pytest-benchmark>=3.0.0", "bokeh<2.0"]
+        return ["python<3.8 bokeh<2.0 codecov colorcet dask[complete] "
+                "datashape fastparquet flake8 nbsmoke numpy pandas pandas "
+                "param pillow pyct[cmd] pytest pytest-benchmark pytest-cov "
+                "scikit-image scipy toolz xarray"]
 
     @property
     def install_command(self):
@@ -270,7 +275,7 @@ class DatashaderTests(GitTarget):
 
     @property
     def test_command(self):
-        execute("pytest datashader")
+        return "pytest datashader"
 
 
 if __name__ == "__main__":
