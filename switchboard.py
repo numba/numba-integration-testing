@@ -91,12 +91,11 @@ class LibrosaTests(GitTarget):
     def conda_dependencies(self):
         return [
             "pip numpy scipy coverage scikit-learn matplotlib pytest",
-            "-c conda-forge ffmpeg pysoundfile",
         ]
 
     @property
     def install_command(self):
-        return "pip install --pre -e .[tests]"
+        return "conda install -c conda-forge ffmpeg pysoundfile && pip install --pre -e .[tests]"
 
     @property
     def test_command(self):
