@@ -35,6 +35,7 @@ jobs:
   librosa:
     executor: test-executor
     steps:
+      - run: sudo apt install libsamplerate0
       - run-target:
           target: "librosa"
   clifford:
