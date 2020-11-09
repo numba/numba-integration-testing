@@ -197,9 +197,13 @@ class FastparquetTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["numpy pandas pytest<5.0.0 "
-                "brotli thrift python-snappy lz4 s3fs moto cython setuptools",
-                "-c conda-forge bson zstandard python-lzo",
+        return ["python numpy pandas==1.0.5 moto cython setuptools pytest",
+                # compression algos available via defaults/main
+                "brotli thrift python-snappy lz4",
+                # compression algos available via conda-forge
+                "-c conda-forge bson python-lzo s3fs",
+                # zstandard and zstd was a mess on anaconda.org at the time of
+                # writing, so enable setup.py to pull in versions from PyPi
                 ]
 
     @property
