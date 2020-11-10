@@ -129,11 +129,11 @@ class AwkwardTests(GitTarget):
 
     @property
     def install_command(self):
-        return "true"
+        return "pip install .[test,dev]"
 
     @property
     def test_command(self):
-        return "python localbuild.py -j 4 --pytest  tests"
+        return "python localbuild.py -j4 --pytest  tests"
 
 class SparseTests(GitTarget):
 
