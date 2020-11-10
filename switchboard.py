@@ -124,7 +124,7 @@ class AwkwardTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["numpy pytest make cmake"]
+        return ["python<=3.8 numpy pytest make cmake"]
 
     @property
     def install_command(self):
