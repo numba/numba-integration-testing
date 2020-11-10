@@ -133,7 +133,7 @@ class AwkwardTests(GitTarget):
 
     @property
     def test_command(self):
-        return "python localbuild.py --pytest -j 4 tests"
+        return "python localbuild.py -j 4 --pytest  tests"
 
 class SparseTests(GitTarget):
 
