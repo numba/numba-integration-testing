@@ -8,7 +8,7 @@ latests releases of specific dependents, i.e. libraries that make heavy use of
 Numba. The target Numba version to test with, will be the latest version of the
 git ``master`` branch where the test suite passed. Configurations for both
 `CircleCI <https://circleci.com/>`_  and `Travis CI <https://travis-ci.org/>`_
-are provided but currently (April 2019) only the CircleCI configuration is
+are provided but currently (April 2020) only the CircleCI configuration is
 active.
 
 :CircleCI: |circleci|
@@ -28,12 +28,7 @@ Tested Projects
 * `pydata/sparse <https://github.com/pydata/sparse.git>`_
 * `fastparquet <https://github.com/dask/fastparquet>`_
 * `pygbm <https://github.com/ogrisel/pygbm>`_
-
-Temporarily Disabled
-====================
-
-* `hpat <https://github.com/IntelLabs/hpat>`_
-
+* `datashader <https://github.com/holoviz/datashader>`_
 
 Adding a new Target
 ===================
