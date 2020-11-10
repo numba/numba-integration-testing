@@ -75,14 +75,14 @@ workflows:
   commit-integration-testing:
     jobs:
       # - hpat
-      - umap
-      - librosa
-      - clifford
+      #- umap
+      #- librosa
+      #- clifford
       - awkward
-      - sparse
-      - fastparquet
-      - pygbm
-      - datashader
+      #- sparse
+      #- fastparquet
+      #- pygbm
+      #- datashader
   nightly-integration-testing:
     jobs:
       # - hpat
