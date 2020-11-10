@@ -124,16 +124,16 @@ class AwkwardTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        compilers = "gcc_linux-64 gxx_linux-64"
+        compilers = "gcc_linux-64=8.2.0 gxx_linux-64=8.2.0"
         return ["python<=3.8 numpy pytest make cmake", compilers]
 
     @property
     def install_command(self):
-        return "pip install .[test,dev]"
+        return "python localbuild.py -j4"
 
     @property
     def test_command(self):
-        return "python localbuild.py -j4 --pytest  tests"
+        return "pytest  tests"
 
 class SparseTests(GitTarget):
 
