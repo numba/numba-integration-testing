@@ -124,7 +124,7 @@ class AwkwardTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        compilers = "-c conda-forge gcc_linux-64 gxx_linux-64"
+        compilers = "-c conda-forge gcc_linux-64=8.2.0 gxx_linux-64=8.2.0"
         return ["python<=3.8 numpy pytest make cmake", compilers]
 
     @property
