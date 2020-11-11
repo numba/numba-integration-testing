@@ -129,10 +129,9 @@ class AwkwardTests(GitTarget):
 
     @property
     def install_command(self):
-
         os.environ["VERBOSE"] = "1"
         os.environ["CMAKE_BUILD_PARALLEL_LEVEL"] = "1"
-        return "python localbuild.py -j1"
+        return "git am ../0001-hack-cmake-to-use-j1.patch && python localbuild.py -j1"
         os.environ.pop("MAKE_VERBOSE")
         os.environ.pop("CMAKE_BUILD_PARALLEL_LEVEL")
 

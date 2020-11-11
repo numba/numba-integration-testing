@@ -1,0 +1,25 @@
+From c3ca2a03ad3a22cb8b876549cd03dfefa7a86493 Mon Sep 17 00:00:00 2001
+From: Valentin Haenel <valentin@haenel.co>
+Date: Wed, 11 Nov 2020 16:01:37 +0100
+Subject: [PATCH] hack cmake to use -j1
+
+---
+ localbuild.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/localbuild.py b/localbuild.py
+index 3191859fc3..561f19a17c 100755
+--- a/localbuild.py
++++ b/localbuild.py
+@@ -84,7 +84,7 @@ if (os.stat("CMakeLists.txt").st_mtime >= localbuild_time or
+     json.dump(thisstate, open("localbuild/laststate.json", "w"))
+ 
+ # Build C++ normally; this might be a no-op if make/ninja determines that the build is up-to-date.
+-check_call(["cmake", "--build", "localbuild", "--", "-j" + args.j])
++check_call(["cmake", "--build", "localbuild", "-j1", "--", "-j" + args.j], env=os.environ)
+ 
+ if args.ctest:
+     check_call(["cmake", "--build", "localbuild", "--target", "test", "--", "CTEST_OUTPUT_ON_FAILURE=1", "--no-print-directory"])
+-- 
+2.17.1
+
