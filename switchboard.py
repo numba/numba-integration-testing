@@ -130,7 +130,7 @@ class AwkwardTests(GitTarget):
     @property
     def install_command(self):
 
-        os.environ["MAKE_VERBOSE"] = "1"
+        os.environ["VERBOSE"] = "1"
         os.environ["CMAKE_BUILD_PARALLEL_LEVEL"] = "1"
         return "python localbuild.py -j1"
         os.environ.pop("MAKE_VERBOSE")
