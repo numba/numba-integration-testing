@@ -136,7 +136,7 @@ class AwkwardTests(GitTarget):
         os.environ["VERBOSE"] = "1"
         os.environ["CMAKE_BUILD_PARALLEL_LEVEL"] = "1"
         super().install()
-        os.environ.pop("MAKE_VERBOSE")
+        os.environ.pop("VERBOSE")
         os.environ.pop("CMAKE_BUILD_PARALLEL_LEVEL")
 
     @property
