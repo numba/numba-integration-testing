@@ -129,7 +129,7 @@ class AwkwardTests(GitTarget):
 
     @property
     def install_command(self):
-        return "git am ../0001-hack-cmake-to-use-j1.patch && python localbuild.py -j1"
+        return "git am ../0001-hack-cmake-to-use-j1.patch && pip install .[test,dev]"
 
     # install need to futz about with the environment
     def install(self):
