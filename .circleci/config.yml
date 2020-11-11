@@ -46,6 +46,8 @@ jobs:
   awkward:
     executor: test-executor
     steps:
+      - run: git config --global user.name "numba-integration-test@circleci"
+      - run: git config --global user.email "numba-integration-test@circleci"
       - run-target:
           target: "awkward"
   sparse:
