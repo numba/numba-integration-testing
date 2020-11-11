@@ -129,7 +129,7 @@ class AwkwardTests(GitTarget):
 
     @property
     def install_command(self):
-        return "python localbuild.py -j4"
+        return "python localbuild.py -j1"
 
     @property
     def test_command(self):
