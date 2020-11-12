@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import platform
 from packaging.version import parse
 
 from texasbbq import (main,
@@ -118,21 +119,43 @@ class AwkwardTests(GitTarget):
     def name(self):
         return "awkward"
 
+    @property
+    def clone_url(self):
+        return "https://github.com/scikit-hep/awkward-1.0.git"
+
+    @property
+    def git_ref(self):
+        return(git_ls_remote_tags(self.clone_url)[-1])
+
     def clone(self):
-        execute("git clone https://github.com/scikit-hep/awkward-1.0.git "
-                "--recursive awkward")
+        # Awkward has special needs when cloning, --recursive.
+        execute(f"git clone -b {self.git_ref} {self.clone_url} "
+                f"--recursive {self.name}")
 
     @property
     def conda_dependencies(self):
-        return ["numpy pytest make cmake"]
+        # Awkward needs more recent compilers, support Linux and MacOSX
+        operating_system = platform.uname()[0]
+        if operating_system == "Linux":
+            compilers = "-c conda-forge gcc_linux-64=9.3 gxx_linux-64=9.3"
+        elif operating_system == "Darwin":
+            compilers = "-c conda-forge clang_osx-64=11.0 clangxx_osx-64=11.0"
+        else:
+            msg = f"Operating system '{operating_system}' is not supported"
+            raise NotImplementedError(msg)
+        # Minimal dependencies only, 'localbuild.py'  will call on 'pip' to
+        # install the rest.
+        return ["python<=3.8 numpy make cmake", compilers]
 
     @property
     def install_command(self):
-        return "true"
+        # Switch -j1 is for 'make' parallellistm and --release for cmake mode.
+        return "python localbuild.py -j1 --release"
 
     @property
     def test_command(self):
-        return "python localbuild.py --pytest tests"
+        # Switch -rfEsxX enables more verbose pytest summary.
+        return "pytest -rfEsxX -v tests"
 
 class SparseTests(GitTarget):
 
