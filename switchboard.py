@@ -100,7 +100,8 @@ class CliffordTests(GitTarget):
     @property
     def conda_dependencies(self):
         return [
-            "ipython numpy scipy pip h5py pytest pytest-benchmark",
+            "python<3.9 ipython numpy<1.19 scipy pip h5py "
+            "pytest pytest-benchmark",
             "-c conda-forge sparse",
         ]
 
