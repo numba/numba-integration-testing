@@ -74,7 +74,6 @@ workflows:
   version: 2.1
   commit-integration-testing:
     jobs:
-      # - hpat
       - umap
       - librosa
       - clifford
@@ -85,7 +84,6 @@ workflows:
       - datashader
   nightly-integration-testing:
     jobs:
-      # - hpat
       - umap
       - librosa
       - clifford
