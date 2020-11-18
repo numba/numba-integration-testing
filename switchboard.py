@@ -275,7 +275,7 @@ class DatashaderTests(GitTarget):
         return ["python<3.8 bokeh<2.0 codecov colorcet dask[complete] "
                 "datashape fastparquet flake8 nbsmoke numpy pandas pandas "
                 "param pillow pyct[cmd] pytest pytest-benchmark pytest-cov "
-                "scikit-image scipy toolz xarray"]
+                "scikit-image scipy toolz xarray netcdf4"]
 
     @property
     def install_command(self):
