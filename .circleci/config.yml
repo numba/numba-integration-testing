@@ -68,6 +68,11 @@ jobs:
     steps:
       - run-target:
           target: "datashader"
+  pandas:
+    executor: test-executor
+    steps:
+      - run-target:
+          target: "pandas"
 
 
 workflows:
@@ -82,6 +87,7 @@ workflows:
       - fastparquet
       - pygbm
       - datashader
+      - pandas
   nightly-integration-testing:
     jobs:
       - umap
@@ -92,6 +98,7 @@ workflows:
       - fastparquet
       - pygbm
       - datashader
+      - pandas
     triggers:
       - schedule:
           cron: "0 5 * * *"
