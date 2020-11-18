@@ -10,6 +10,7 @@ from texasbbq import (main,
                       git_latest_tag,
                       CondaSource,
                       GitTarget,
+                      CondaTarget,
                       )
 
 
@@ -284,6 +285,25 @@ class DatashaderTests(GitTarget):
     @property
     def test_command(self):
         return "pytest datashader"
+
+
+class PandasTests(CondaTarget):
+
+    @property
+    def name(self):
+        return "pandas"
+
+    @property
+    def conda_package(self):
+        return "pandas"
+
+    @property
+    def conda_dependencies(self):
+        return ["hypothesis pytest"]
+
+    @property
+    def test_command(self):
+        return "pytest --pyargs pandas.tests.groupby.aggregate.test_numba"
 
 
 if __name__ == "__main__":
