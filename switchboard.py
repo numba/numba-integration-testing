@@ -10,6 +10,7 @@ from texasbbq import (main,
                       git_latest_tag,
                       CondaSource,
                       GitTarget,
+                      CondaTarget,
                       )
 
 
@@ -284,6 +285,49 @@ class DatashaderTests(GitTarget):
     @property
     def test_command(self):
         return "pytest datashader"
+
+
+class PandasTests(CondaTarget):
+
+    @property
+    def name(self):
+        return "pandas"
+
+    @property
+    def conda_package(self):
+        return self.name
+
+    @property
+    def conda_dependencies(self):
+        return ["python<3.9 hypothesis pytest"]
+
+    def test(self):
+        # Testing pandas has special requirements.
+        # See: https://github.com/pandas-dev/pandas/issues/37939
+
+        # Obtain all the paths of the relevant test modules. This uses the
+        # subprocess module to execute `conda run`, which then runs a single
+        # Python command in the correct environment to import the test module
+        # and print it's __file__ attribute.
+
+        paths = []
+        for module_subpath in (
+            "util",
+            "groupby.aggregate",
+            "groupby.transform",
+            "window",
+            ):
+            path = execute('conda run -n pandas python -c '
+                           '"from pandas.tests.{} import test_numba ; '
+                           'print(test_numba.__file__)"'.format(
+                               module_subpath), capture=True)
+            paths.append(path.decode("utf-8").strip())
+
+        # Run pytest on all the testing modules. This again uses subprocess to
+        # execute conda run to run pytest in the correct environment on the
+        # correct paths of the test module.
+        execute('conda run --no-capture-output -n pandas pytest '
+                '{}'.format(" ".join(paths)))
 
 
 if __name__ == "__main__":
