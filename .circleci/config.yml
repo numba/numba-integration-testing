@@ -58,11 +58,6 @@ jobs:
     steps:
       - run-target:
           target: "fastparquet"
-  pygbm:
-    executor: test-executor
-    steps:
-      - run-target:
-          target: "pygbm"
   datashader:
     executor: test-executor
     steps:
@@ -80,7 +75,6 @@ workflows:
       - awkward
       - sparse
       - fastparquet
-      - pygbm
       - datashader
   nightly-integration-testing:
     jobs:
@@ -90,7 +84,6 @@ workflows:
       - awkward
       - sparse
       - fastparquet
-      - pygbm
       - datashader
     triggers:
       - schedule:

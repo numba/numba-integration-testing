@@ -228,33 +228,6 @@ class FastparquetTests(GitTarget):
         os.environ.pop("AWS_SECRET_ACCESS_KEY")
 
 
-class PygbmTests(GitTarget):
-
-    @property
-    def name(self):
-        return "pygbm"
-
-    @property
-    def clone_url(self):
-        return "https://github.com/ogrisel/pygbm.git"
-
-    @property
-    def git_ref(self):
-        return(git_ls_remote_tags(self.clone_url)[-1])
-
-    @property
-    def conda_dependencies(self):
-        return ["scipy scikit-learn pytest joblib lightgbm"]
-
-    @property
-    def install_command(self):
-        return "pip install --editable ."
-
-    @property
-    def test_command(self):
-        return "pytest"
-
-
 class DatashaderTests(GitTarget):
 
     @property
