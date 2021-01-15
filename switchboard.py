@@ -203,7 +203,7 @@ class FastparquetTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["python numpy pandas==1.0.5 moto cython setuptools pytest",
+        return ["python numpy pandas moto cython setuptools pytest",
                 # compression algos available via defaults/main
                 "brotli thrift python-snappy lz4",
                 # compression algos available via conda-forge
