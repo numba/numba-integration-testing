@@ -139,7 +139,7 @@ class AwkwardTests(GitTarget):
         # Awkward needs more recent compilers, support Linux and MacOSX
         operating_system = platform.uname()[0]
         if operating_system == "Linux":
-            compilers = "-c conda-forge gcc_linux-64=9.3 gxx_linux-64=9.3"
+            compilers = "-c conda-forge gcc_linux-64=9.3 gxx_linux-64=9.3 sysroot_linux-64=2.17"
         elif operating_system == "Darwin":
             compilers = "-c conda-forge clang_osx-64=11.0 clangxx_osx-64=11.0"
         else:
