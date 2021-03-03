@@ -101,7 +101,7 @@ class CliffordTests(GitTarget):
     @property
     def conda_dependencies(self):
         return [
-            "python<3.9 ipython numpy<1.19 scipy pip h5py "
+            "python ipython numpy scipy pip h5py "
             "pytest pytest-benchmark",
             "-c conda-forge sparse",
         ]
@@ -147,7 +147,7 @@ class AwkwardTests(GitTarget):
             raise NotImplementedError(msg)
         # Minimal dependencies only, 'localbuild.py'  will call on 'pip' to
         # install the rest.
-        return ["python<=3.8 numpy make cmake", compilers]
+        return ["python numpy make cmake", compilers]
 
     @property
     def install_command(self):
@@ -246,7 +246,7 @@ class DatashaderTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["python<3.9 bokeh<2.0 codecov colorcet dask[complete] "
+        return ["python bokeh<2.0 codecov colorcet dask[complete] "
                 "datashape fastparquet flake8 nbsmoke numpy pandas pandas==1.2.0 "
                 "param pillow pyct[cmd] pytest pytest-benchmark pytest-cov "
                 "scikit-image scipy toolz xarray==0.16.2 netcdf4"]
@@ -272,7 +272,7 @@ class PandasTests(CondaTarget):
 
     @property
     def conda_dependencies(self):
-        return ["python<3.9 hypothesis pytest"]
+        return ["python hypothesis pytest"]
 
     def test(self):
         # Testing pandas has special requirements.
