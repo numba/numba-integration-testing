@@ -247,7 +247,7 @@ class DatashaderTests(GitTarget):
     @property
     def conda_dependencies(self):
         return ["python bokeh<2.0 codecov colorcet dask[complete] "
-                "datashape fastparquet flake8 nbsmoke numpy pandas pandas==1.2.0 "
+                "datashape fastparquet flake8 nbsmoke numpy pandas pandas "
                 "param pillow pyct[cmd] pytest pytest-benchmark pytest-cov "
                 "scikit-image scipy toolz xarray==0.16.2 netcdf4"]
 
