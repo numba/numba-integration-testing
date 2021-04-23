@@ -101,7 +101,7 @@ class CliffordTests(GitTarget):
     @property
     def conda_dependencies(self):
         return [
-            "python ipython numpy scipy pip h5py "
+            "python ipython numpy=1.19 scipy pip h5py "
             "pytest pytest-benchmark",
             "-c conda-forge sparse",
         ]
@@ -203,7 +203,7 @@ class FastparquetTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["python numpy pandas moto cython setuptools pytest",
+        return ["python numpy=1.19 pandas moto cython setuptools pytest",
                 # compression algos available via defaults/main
                 "brotli thrift python-snappy lz4",
                 # compression algos available via conda-forge
@@ -247,7 +247,7 @@ class DatashaderTests(GitTarget):
     @property
     def conda_dependencies(self):
         return ["python bokeh<2.0 codecov colorcet dask[complete] "
-                "datashape fastparquet flake8 nbsmoke numpy pandas pandas "
+                "datashape fastparquet flake8 nbsmoke numpy=1.19 pandas pandas "
                 "param pillow pyct[cmd] pytest pytest-benchmark pytest-cov "
                 "scikit-image scipy toolz xarray==0.16.2 netcdf4"]
 
