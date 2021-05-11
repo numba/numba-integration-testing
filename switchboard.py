@@ -303,5 +303,37 @@ class PandasTests(CondaTarget):
                 '{}'.format(" ".join(paths)))
 
 
+class TardisTests(GitTarget):
+    
+    @property
+    def name(self):
+        return "tardis"
+    
+    @property
+    def clone_url(self):
+        return "https://github.com/tardis-sn/tardis.git"
+    
+    @property
+    def git_ref(self):
+        return (git_ls_remote_tags(self.clone_url)[-1])
+    
+    @property
+    def conda_dependencies(self):
+        return ["python=3", "pip", "numpy=1.19", "scipy=1.5", "pandas=1.0", "astropy=3", "numba", "numexpr", "networkx",
+                "pyyaml", "jsonschema", "pyne=0.7", "pytables", "h5py", "requests", "tqdm", "beautifulsoup4", "lxml", 
+                "jupyter", "notebook", "matplotlib", "graphviz", "pygraphviz", "ipywidgets", "qgrid", "plotly", "pyside2", 
+                "sphinx", "nbconvert", "numpydoc", "docutils>=0.16, <0.17", "nbformat", "nbsphinx", "sphinx_bootstrap_theme", 
+                "sphinxcontrib-bibtex=1.0", "sphinxcontrib-apidoc", "sphinx_rtd_theme", "recommonmark", "git-lfs", 
+                "pytest=5", "pytest-html", "pytest-cov", "coverage", "requests", "docopt", "black", "parso=0.8"]
+    
+    @property
+    def install_command(self):
+        return "python setup.py develop"
+    
+    @property
+    def test_command(self):
+        return "pytest tardis --tardis-refdata=$(refdata.dir) --cov=tardis --cov-report=xml --cov-report=html"
+
+
 if __name__ == "__main__":
     main(NumbaSource())
