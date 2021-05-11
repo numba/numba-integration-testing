@@ -332,7 +332,7 @@ class TardisTests(GitTarget):
     
     @property
     def test_command(self):
-        return "pytest tardis --tardis-refdata=$(refdata.dir) --cov=tardis --cov-report=xml --cov-report=html"
+        return "pytest tardis --cov=tardis --cov-report=xml --cov-report=html"
 
 
 if __name__ == "__main__":
