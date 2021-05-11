@@ -101,7 +101,7 @@ workflows:
       - tardis
     triggers:
       - schedule:
-          cron: "12 14 * * *"
+          cron: "0 5 * * *"
           filters:
             branches:
               only:
