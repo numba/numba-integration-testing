@@ -321,7 +321,7 @@ class TardisTests(GitTarget):
     sphinx nbconvert numpydoc docutils=0.16 "
     "nbformat nbsphinx sphinx_bootstrap_theme sphinxcontrib-bibtex=1.0 "
     "sphinxcontrib-apidoc sphinx_rtd_theme recommonmark git-lfs pyside2 
-    pytest-html pytest-cov coverage docopt black
+    pytest-html pytest-cov coverage docopt black all of pip dependencies
     """
     @property
     def conda_dependencies(self):
@@ -335,7 +335,7 @@ class TardisTests(GitTarget):
     
     @property
     def install_command(self):
-        return "python setup.py install"
+        return "python setup.py develop"
     
     @property
     def test_command(self):
