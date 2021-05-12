@@ -323,7 +323,7 @@ class TardisTests(GitTarget):
                 "numba", "numexpr", "networkx", "pyyaml", "jsonschema", "pytables", 
                 "h5py", "requests", "tqdm", "beautifulsoup4", "lxml", "jupyter", 
                 "notebook", "matplotlib", "graphviz", "pygraphviz", "ipywidgets", 
-                "qgrid", "plotly", "pyside2", "sphinx", "nbconvert", "numpydoc", 
+                "qgrid", "plotly", "sphinx", "nbconvert", "numpydoc", 
                 "docutils>=0.16, <0.17", "nbformat", "nbsphinx", "sphinx_bootstrap_theme", 
                 "sphinxcontrib-bibtex=1.0", "sphinxcontrib-apidoc", "sphinx_rtd_theme", 
                 "recommonmark", "git-lfs", "pytest=5", "pytest-html", "pytest-cov", 
@@ -331,7 +331,7 @@ class TardisTests(GitTarget):
     
     @property
     def install_command(self):
-        return "python setup.py develop && pip install sphinxcontrib-tikz dokuwiki dot2tex sphinx-jsonschema git+https://github.com/Naereen/dot2tex.git pickle5 && conda install -c conda-forge pyne=0.7"
+        return "conda install -c conda-forge pyne=0.7 pyside2 && pip install sphinxcontrib-tikz dokuwiki dot2tex sphinx-jsonschema git+https://github.com/Naereen/dot2tex.git pickle5 && python setup.py install"
     
     @property
     def test_command(self):
