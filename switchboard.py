@@ -318,10 +318,10 @@ class TardisTests(GitTarget):
     def git_ref(self):
         return (git_ls_remote_tags(self.clone_url)[-1])
     """
-    sphinx nbconvert numpydoc docutils=0.16 "
-    "nbformat nbsphinx sphinx_bootstrap_theme sphinxcontrib-bibtex=1.0 "
-    "sphinxcontrib-apidoc sphinx_rtd_theme recommonmark git-lfs pyside2 
-    pytest-html pytest-cov coverage docopt black all of pip dependencies
+    sphinx nbconvert numpydoc docutils=0.16 
+    nbformat nbsphinx sphinx_bootstrap_theme sphinxcontrib-bibtex=1.0 
+    sphinxcontrib-apidoc sphinx_rtd_theme recommonmark git-lfs pyside2 
+    pytest-html pytest-cov coverage docopt black all of the pip dependencies
     """
     @property
     def conda_dependencies(self):
