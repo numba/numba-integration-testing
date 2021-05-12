@@ -305,6 +305,7 @@ class PandasTests(CondaTarget):
 
 class TardisTests(GitTarget):
     
+    
     @property
     def name(self):
         return "tardis"
