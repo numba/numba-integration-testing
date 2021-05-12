@@ -325,15 +325,16 @@ class TardisTests(GitTarget):
     @property
     def install_command(self):
         return "conda install -c conda-forge pyne=0.7 pyside2 sphinxcontrib-bibtex=1.0 " 
-                "sphinxcontrib-apidoc nbsphinx sphinx_bootstrap_theme "
-                "numpy=1.19 scipy=1.5 pandas=1.0 astropy=3 " 
-                "numba numexpr networkx pyyaml jsonschema pytables " 
-                "h5py requests tqdm beautifulsoup4 lxml jupyter " 
-                "notebook matplotlib graphviz pygraphviz ipywidgets " 
-                "qgrid plotly sphinx nbconvert numpydoc docutils=0.16 "
-                "nbformat sphinx_rtd_theme recommonmark git-lfs pytest=5 "
-                "pytest-html pytest-cov coverage requests docopt black parso=0.8 "
-                "&& pip install sphinxcontrib-tikz dokuwiki dot2tex sphinx-jsonschema git+https://github.com/Naereen/dot2tex.git pickle5 && python setup.py install"
+               "sphinxcontrib-apidoc nbsphinx sphinx_bootstrap_theme "
+               "numpy=1.19 scipy=1.5 pandas=1.0 astropy=3 " 
+               "numba numexpr networkx pyyaml jsonschema pytables " 
+               "h5py requests tqdm beautifulsoup4 lxml jupyter " 
+               "notebook matplotlib graphviz pygraphviz ipywidgets " 
+               "qgrid plotly sphinx nbconvert numpydoc docutils=0.16 "
+               "nbformat sphinx_rtd_theme recommonmark git-lfs pytest=5 "
+               "pytest-html pytest-cov coverage requests docopt black parso=0.8 "
+               "&& pip install sphinxcontrib-tikz dokuwiki dot2tex sphinx-jsonschema "
+               "git+https://github.com/Naereen/dot2tex.git pickle5 && python setup.py install"
     
     @property
     def test_command(self):
