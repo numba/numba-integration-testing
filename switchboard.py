@@ -325,7 +325,7 @@ class TardisTests(GitTarget):
     """
     @property
     def conda_dependencies(self):
-        return ["-c conda-forge python=3 pip numpy=1.19 scipy=1.5 "
+        return ["-c conda-forge python=3.8 pip numpy=1.19 scipy=1.5 "
     "pandas=1.0 astropy=3 numba numexpr networkx pyyaml jsonschema "
     "pyne=0.7 pytables h5py requests tqdm beautifulsoup4 lxml "
     "jupyter notebook matplotlib graphviz pygraphviz ipywidgets "
