@@ -320,11 +320,7 @@ class TardisTests(GitTarget):
     
     @property
     def conda_dependencies(self):
-        return ["python=3 pip"]
-    
-    @property
-    def install_command(self):
-        return "conda install -n tardis -c conda-forge numpy=1.19 scipy=1.5 "
+        return ["python=3 pip", "-c conda-forge numpy=1.19 scipy=1.5 "
     "pandas=1.0 astropy=3 numba numexpr networkx pyyaml jsonschema "
     "pyne=0.7 pytables h5py requests tqdm beautifulsoup4 lxml "
     "jupyter notebook matplotlib graphviz pygraphviz ipywidgets "
@@ -332,7 +328,11 @@ class TardisTests(GitTarget):
     "nbformat nbsphinx sphinx_bootstrap_theme sphinxcontrib-bibtex=1.0 "
     "sphinxcontrib-apidoc sphinx_rtd_theme recommonmark git-lfs "
     "pytest=5 pytest-html pytest-cov coverage requests docopt black "
-    "parso=0.8 && pip install sphinxcontrib-tikz dokuwiki dot2tex "
+    "parso=0.8"]
+    
+    @property
+    def install_command(self):
+        return "pip install sphinxcontrib-tikz dokuwiki dot2tex "
     "sphinx-jsonschema git+https://github.com/Naereen/dot2tex.git "
     "pickle5 && python setup.py install"
     
