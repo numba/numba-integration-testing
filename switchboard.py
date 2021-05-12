@@ -331,13 +331,11 @@ class TardisTests(GitTarget):
     "jupyter notebook matplotlib graphviz pygraphviz ipywidgets "
     "qgrid plotly "
     "pytest=5 requests "
-    "parso=0.8"]
+    "parso=0.8 pickle5"]
     
     @property
     def install_command(self):
-        return "pip install sphinxcontrib-tikz dokuwiki dot2tex "
-    "sphinx-jsonschema git+https://github.com/Naereen/dot2tex.git "
-    "pickle5 && python setup.py install"
+        return "python setup.py install"
     
     @property
     def test_command(self):
