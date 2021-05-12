@@ -329,9 +329,7 @@ class TardisTests(GitTarget):
     "pandas=1.0 astropy=3 numba numexpr networkx pyyaml jsonschema "
     "pyne=0.7 pytables h5py requests tqdm beautifulsoup4 lxml "
     "jupyter notebook matplotlib graphviz pygraphviz ipywidgets "
-    "qgrid plotly "
-    "pytest=5 requests "
-    "parso=0.8 pickle5"]
+    "qgrid plotly pytest=5 requests parso=0.8 pickle5"]
     
     @property
     def install_command(self):
