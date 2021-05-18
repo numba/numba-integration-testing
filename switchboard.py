@@ -330,7 +330,7 @@ class TardisTests(GitTarget):
     
     @property
     def install_command(self):
-        return ["conda env create -f tardis_env3.yml","python setup.py develop"]
+        return ["conda env update -n tardis --file tardis_env3.yml","python setup.py develop"]
     
     @property
     def test_command(self):
