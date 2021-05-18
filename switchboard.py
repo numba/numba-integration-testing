@@ -330,11 +330,20 @@ class TardisTests(GitTarget):
     
     @property
     def install_command(self):
-        return "conda env create -f tardis_env3.yml && python setup.py develop"
+        return ["conda env create -f tardis_env3.yml","python setup.py develop"]
     
     @property
     def test_command(self):
         return "pytest tardis"
+    
+    def install(self):
+        """ Custom install function for Tardis """
+        if not os.path.exists(self.name):
+            self.clone()
+        os.chdir(self.name)
+        execute("conda run --no-capture-output {}".format(self.install_command[0]))
+        execute("conda run --no-capture-output -n {} {}".format(self.name, self.install_command[1]))           
+        os.chdir('../')
 
 
 if __name__ == "__main__":
