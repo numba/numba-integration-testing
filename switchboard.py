@@ -326,6 +326,7 @@ class TardisTests(GitTarget):
     @property
     def conda_dependencies(self):
         return []
+
     
     @property
     def install_command(self):
