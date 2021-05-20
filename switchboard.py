@@ -325,25 +325,18 @@ class TardisTests(GitTarget):
     """
     @property
     def conda_dependencies(self):
-        return []
-
+        return ["-c conda-forge python=3 pip numpy=1.19 scipy=1.5 "
+    "pandas=1.0 astropy=3 numexpr networkx pyyaml jsonschema "
+    "pyne=0.7 pytables h5py requests tqdm matplotlib graphviz "
+    "pygraphviz ipywidgets qgrid plotly pytest=5 requests parso=0.8"]
     
     @property
     def install_command(self):
-        return ["conda env update -n tardis --file tardis_env3.yml","python setup.py develop"]
+        return "python setup.py develop"
     
     @property
     def test_command(self):
         return "pytest tardis"
-    
-    def install(self):
-        """ Custom install function for Tardis """
-        if not os.path.exists(self.name):
-            self.clone()
-        os.chdir(self.name)
-        execute("conda run --no-capture-output {}".format(self.install_command[0]))
-        execute("conda run --no-capture-output -n {} {}".format(self.name, self.install_command[1]))           
-        os.chdir('../')
 
 
 if __name__ == "__main__":
