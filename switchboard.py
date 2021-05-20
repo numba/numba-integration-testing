@@ -322,6 +322,7 @@ class TardisTests(GitTarget):
     nbformat nbsphinx sphinx_bootstrap_theme sphinxcontrib-bibtex=1.0 
     sphinxcontrib-apidoc sphinx_rtd_theme recommonmark git-lfs pyside2 
     pytest-html pytest-cov coverage docopt black all of the pip dependencies
+    except dokuwiki
     """
     @property
     def conda_dependencies(self):
@@ -337,6 +338,15 @@ class TardisTests(GitTarget):
     @property
     def test_command(self):
         return "pytest tardis"
+    
+    def install(self):
+        """ Custom install function for Tardis """
+        if not os.path.exists(self.name):
+            self.clone()
+        os.chdir(self.name)
+        execute("conda run --no-capture-output -n {} {}".format(self.name, "pip install dokuwiki"))
+        execute("conda run --no-capture-output -n {} {}".format(self.name, self.install_command))
+        os.chdir('../')
 
 
 if __name__ == "__main__":
