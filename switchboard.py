@@ -320,16 +320,16 @@ class TardisTests(GitTarget):
     """
     sphinx nbconvert numpydoc docutils=0.16 
     nbformat nbsphinx sphinx_bootstrap_theme sphinxcontrib-bibtex=1.0 
-    sphinxcontrib-apidoc sphinx_rtd_theme recommonmark git-lfs pyside2 
-    pytest-html pytest-cov coverage docopt black all of the pip dependencies
-    except dokuwiki
+    sphinxcontrib-apidoc sphinx_rtd_theme recommonmark pyside2 
+    black all of the pip dependencies xcept dokuwiki
     """
     @property
     def conda_dependencies(self):
         return ["-c conda-forge python=3 pip numpy=1.19 scipy=1.5 "
     "pandas=1.0 astropy=3 numexpr networkx pyyaml jsonschema "
     "pyne=0.7 pytables h5py requests tqdm matplotlib graphviz "
-    "pygraphviz ipywidgets qgrid plotly pytest=5 requests parso=0.8"]
+    "pygraphviz ipywidgets qgrid plotly pytest=5 requests parso=0.8 "
+    "pytest-html"]
     
     @property
     def install_command(self):
