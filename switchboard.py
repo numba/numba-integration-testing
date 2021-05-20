@@ -305,7 +305,6 @@ class PandasTests(CondaTarget):
 
 class TardisTests(GitTarget):
     
-    
     @property
     def name(self):
         return "tardis"
@@ -317,12 +316,7 @@ class TardisTests(GitTarget):
     @property
     def git_ref(self):
         return (git_ls_remote_tags(self.clone_url)[-1])
-    """
-    sphinx nbconvert numpydoc docutils=0.16 
-    nbformat nbsphinx sphinx_bootstrap_theme sphinxcontrib-bibtex=1.0 
-    sphinxcontrib-apidoc sphinx_rtd_theme recommonmark pyside2 
-    black all of the pip dependencies xcept dokuwiki
-    """
+    
     @property
     def conda_dependencies(self):
         return ["-c conda-forge python=3 pip numpy=1.19 scipy=1.5 "
