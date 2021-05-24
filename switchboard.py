@@ -330,7 +330,7 @@ class TardisTests(GitTarget):
     
     @property
     def test_command(self):
-        return "pytest tardis --tardis-refdata=''"
+        return "pytest tardis --tardis-refdata=/home/kevin/tardis/tardis-refdata"
     
     def install(self):
         """ Custom install function for Tardis """
@@ -339,10 +339,17 @@ class TardisTests(GitTarget):
         os.chdir(self.name)
         execute("conda run --no-capture-output -n {} {}".format(self.name, "pip install dokuwiki pytest-azurepipelines"))
         execute("conda run --no-capture-output -n {} {}".format(self.name, self.install_command))
-        execute("conda run --no-capture-output -n {} {}".format(self.name, "curl -O https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/kurucz_cd23_chianti_H_He.h5&resolveLfs=true"))
-        execute("conda run --no-capture-output -n {} {}".format(self.name, "mkdir atom_data"))
-        execute("conda run --no-capture-output -n {} {}".format(self.name, "mv kurucz_cd23_chianti_H_He.h5 atom_data/kurucz_cd23_chianti_H_He.h5"))
-        execute("conda run --no-capture-output -n {} {}".format(self.name, "curl -O https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/unit_test_data.h5&resolveLfs=true"))
+        execute("{}".format("mkdir -p tardis-refdata/atom_data"))
+        execute("{}".format("curl -O https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/kurucz_cd23_chianti_H_He.h5&resolveLfs=true"))
+        execute("{}".format("curl -O https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/chianti_He.h5&resolveLfs=true"))
+        execute("{}".format("curl -O https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/unit_test_data.h5&resolveLfs=true"))
+        execute("{}".format("curl -O https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/packet_unittest.h5&resolveLfs=true"))
+        execute("{}".format("curl -O https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/montecarlo_1e5_compare_data.h5&resolveLfs=true"))
+        execute("{}".format("mv kurucz_cd23_chianti_H_He.h5 tardis-refdata/atom_data/kurucz_cd23_chianti_H_He.h5"))
+        execute("{}".format("mv chianti_He.h5 tardis-refdata/atom_data/chianti_He.h5"))
+        execute("{}".format("mv unit_test_data.h5 tardis-refdata/unit_test_data.h5"))
+        execute("{}".format("mv packet_unittest.h5 tardis-refdata/packet_unittest.h5"))
+        execute("{}".format("mv montecarlo_1e5_compare_data.h5 tardis-refdata/montecarlo_1e5_compare_data.h5"))
         os.chdir('../')
 
 
