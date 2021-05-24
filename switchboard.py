@@ -339,8 +339,8 @@ class TardisTests(GitTarget):
         os.chdir(self.name)
         execute("conda run --no-capture-output -n {} {}".format(self.name, "pip install dokuwiki pytest-azurepipelines"))
         execute("conda run --no-capture-output -n {} {}".format(self.name, self.install_command))
-        execute("conda run --no-capture-output -n {} {}".format(self.name, "wget https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/kurucz_cd23_chianti_H_He.h5&resolveLfs=true -o atom_data/kurucz_cd23_chianti_H_He.h5"))
-        execute("conda run --no-capture-output -n {} {}".format(self.name, "wget https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=unit_test_data.h5&resolveLfs=true -o unit_test_data.h5"))
+        execute("-n {} {}".format(self.name, "wget https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/kurucz_cd23_chianti_H_He.h5&resolveLfs=true -o atom_data/kurucz_cd23_chianti_H_He.h5"))
+        execute("-n {} {}".format(self.name, "wget https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=unit_test_data.h5&resolveLfs=true -o unit_test_data.h5"))
         os.chdir('../')
 
 
