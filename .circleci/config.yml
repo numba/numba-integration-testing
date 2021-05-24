@@ -79,6 +79,14 @@ workflows:
   version: 2.1
   commit-integration-testing:
     jobs:
+    	- umap
+      - librosa
+      - clifford
+      - awkward
+      - sparse
+      - fastparquet
+      - datashader
+      - pandas
       - tardis
   nightly-integration-testing:
     jobs:
