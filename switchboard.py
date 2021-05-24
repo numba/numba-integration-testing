@@ -333,19 +333,19 @@ class TardisTests(GitTarget):
         return "pytest tardis --tardis-refdata=/home/circleci/repo/tardis/tardis-refdata"
     
     def install(self):
-        """ Custom install function for Tardis """
+        """ Custom install function for TARDIS """
         if not os.path.exists(self.name):
             self.clone()
         os.chdir(self.name)
         execute("conda run --no-capture-output -n {} {}".format(self.name, "pip install dokuwiki pytest-azurepipelines"))
         execute("conda run --no-capture-output -n {} {}".format(self.name, self.install_command))
-        execute("{}".format("mkdir -p tardis-refdata/atom_data"))
-        
-        execute("{}".format("wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/kurucz_cd23_chianti_H_He.h5&resolveLfs=true' -O tardis-refdata/atom_data/kurucz_cd23_chianti_H_He.h5"))
-        execute("{}".format("wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/chianti_He.h5&resolveLfs=true' -O tardis-refdata/atom_data/chianti_He.h5"))
-        execute("{}".format("wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=unit_test_data.h5&resolveLfs=true' -O tardis-refdata/unit_test_data.h5"))
-        execute("{}".format("wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=packet_unittest.h5&resolveLfs=true' -O tardis-refdata/packet_unittest.h5"))
-        execute("{}".format("wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=montecarlo_1e5_compare_data.h5&resolveLfs=true' -O tardis-refdata/montecarlo_1e5_compare_data.h5"))
+        execute("mkdir -p tardis-refdata/atom_data")
+        #Download the necessary refdata
+        execute("wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/kurucz_cd23_chianti_H_He.h5&resolveLfs=true' -O tardis-refdata/atom_data/kurucz_cd23_chianti_H_He.h5")
+        execute("wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/chianti_He.h5&resolveLfs=true' -O tardis-refdata/atom_data/chianti_He.h5")
+        execute("wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=unit_test_data.h5&resolveLfs=true' -O tardis-refdata/unit_test_data.h5")
+        execute("wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=packet_unittest.h5&resolveLfs=true' -O tardis-refdata/packet_unittest.h5")
+        execute("wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=montecarlo_1e5_compare_data.h5&resolveLfs=true' -O tardis-refdata/montecarlo_1e5_compare_data.h5")
         os.chdir('../')
 
 
