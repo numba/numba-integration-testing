@@ -322,7 +322,7 @@ class TardisTests(GitTarget):
         return ["-c conda-forge python=3 pip numpy=1.19 scipy=1.5 "
     "pandas=1.0 astropy=3 numexpr networkx pyyaml jsonschema "
     "pyne=0.7 pytables h5py requests tqdm matplotlib graphviz "
-    "pygraphviz ipywidgets qgrid plotly pytest=5 requests pytest-html"]
+    "pygraphviz ipywidgets qgrid plotly pytest=5 git-lfs requests pytest-html"]
     
     @property
     def install_command(self):
@@ -330,15 +330,17 @@ class TardisTests(GitTarget):
     
     @property
     def test_command(self):
-        return "pytest tardis"
+        return "pytest tardis --tardis-refdata=''"
     
     def install(self):
         """ Custom install function for Tardis """
         if not os.path.exists(self.name):
             self.clone()
         os.chdir(self.name)
-        execute("conda run --no-capture-output -n {} {}".format(self.name, "pip install dokuwiki"))
+        execute("conda run --no-capture-output -n {} {}".format(self.name, "pip install dokuwiki pytest-azurepipelines"))
         execute("conda run --no-capture-output -n {} {}".format(self.name, self.install_command))
+        execute("conda run --no-capture-output -n {} {}".format(self.name, "wget https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/kurucz_cd23_chianti_H_He.h5&resolveLfs=true -o atom_data/kurucz_cd23_chianti_H_He.h5"))
+        execute("conda run --no-capture-output -n {} {}".format(self.name, "wget https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=unit_test_data.h5&resolveLfs=true -o unit_test_data.h5"))
         os.chdir('../')
 
 
