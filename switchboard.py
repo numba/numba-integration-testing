@@ -330,7 +330,7 @@ class TardisTests(GitTarget):
     
     @property
     def test_command(self):
-        return "pytest tardis --tardis-refdata=/home/kevin/tardis/tardis-refdata"
+        return "pytest tardis --tardis-refdata=tardis-refdata"
     
     def install(self):
         """ Custom install function for Tardis """
