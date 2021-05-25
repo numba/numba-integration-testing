@@ -29,6 +29,7 @@ Tested Projects
 * `fastparquet <https://github.com/dask/fastparquet>`_
 * `pygbm <https://github.com/ogrisel/pygbm>`_
 * `datashader <https://github.com/holoviz/datashader>`_
+* `tardis <https://github.com/tardis-sn/tardis>`_
 
 Adding a new Target
 ===================

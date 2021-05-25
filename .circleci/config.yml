@@ -68,6 +68,11 @@ jobs:
     steps:
       - run-target:
           target: "pandas"
+  tardis:
+    executor: test-executor
+    steps:
+      - run-target:
+          target: "tardis"
 
 
 workflows:
@@ -82,6 +87,7 @@ workflows:
       - fastparquet
       - datashader
       - pandas
+      - tardis
   nightly-integration-testing:
     jobs:
       - umap
@@ -92,6 +98,7 @@ workflows:
       - fastparquet
       - datashader
       - pandas
+      - tardis
     triggers:
       - schedule:
           cron: "0 5 * * *"
