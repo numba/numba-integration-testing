@@ -321,8 +321,8 @@ class TardisTests(GitTarget):
     def conda_dependencies(self):
         return ["-c conda-forge python=3 pip numpy=1.19 scipy=1.5 "
     "pandas=1.0 astropy=3 numexpr networkx pyyaml jsonschema "
-    "pyne=0.7 pytables h5py requests tqdm matplotlib graphviz "
-    "pygraphviz ipywidgets qgrid plotly pytest=5 git-lfs requests pytest-html"]
+    "pyne=0.7 pytables h5py requests tqdm matplotlib pygraphviz "
+    "ipywidgets qgrid plotly pytest=5 requests pytest-html"]
     
     @property
     def install_command(self):
