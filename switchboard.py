@@ -323,6 +323,10 @@ class TardisTests(GitTarget):
     "pandas=1.0 astropy=3 numexpr networkx pyyaml jsonschema "
     "pyne=0.7 pytables h5py requests tqdm matplotlib pygraphviz "
     "ipywidgets qgrid plotly pytest requests pytest-html"]
+      
+    @property
+    def pip_dependencies(self):
+      return ["dokuwiki pytest-azurepipelines"]
     
     @property
     def install_command(self):
@@ -337,7 +341,6 @@ class TardisTests(GitTarget):
         if not os.path.exists(self.name):
             self.clone()
         os.chdir(self.name)
-        execute("conda run --no-capture-output -n {} {}".format(self.name, "pip install dokuwiki pytest-azurepipelines"))
         execute("conda run --no-capture-output -n {} {}".format(self.name, self.install_command))
         execute("mkdir -p tardis-refdata/atom_data")
         #Download the necessary refdata
