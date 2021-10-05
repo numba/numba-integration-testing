@@ -260,6 +260,27 @@ class DatashaderTests(GitTarget):
         return "pytest datashader"
 
 
+class NumpyTests(CondaTarget):
+
+    @property
+    def name(self):
+        return "Numpy"
+
+    @property
+    def conda_package(self):
+        return self.name
+
+    @property
+    def conda_dependencies(self):
+        return []
+
+    def install(self):
+        execute('conda run --no-capture-output -n numpy pip install --pre -U numpy')
+
+    def test(self):
+        execute('conda run --no-capture-output -n numpy python -m numba.runtests -m 4')
+
+
 class PandasTests(CondaTarget):
 
     @property
