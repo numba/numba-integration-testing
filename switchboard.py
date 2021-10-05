@@ -264,7 +264,7 @@ class NumpyTests(CondaTarget):
 
     @property
     def name(self):
-        return "Numpy"
+        return "numpy"
 
     @property
     def conda_package(self):
