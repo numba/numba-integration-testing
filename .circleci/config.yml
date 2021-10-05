@@ -73,32 +73,21 @@ jobs:
     steps:
       - run-target:
           target: "tardis"
+  numpy:
+    executor: test-executor
+    steps:
+      - run-target:
+          target: "numpy"
 
 
 workflows:
   version: 2.1
   commit-integration-testing:
     jobs:
-      - umap
-      - librosa
-      - clifford
-      - awkward
-      - sparse
-      - fastparquet
-      - datashader
-      - pandas
-      - tardis
+      - numpy
   nightly-integration-testing:
     jobs:
-      - umap
-      - librosa
-      - clifford
-      - awkward
-      - sparse
-      - fastparquet
-      - datashader
-      - pandas
-      - tardis
+      - numpy
     triggers:
       - schedule:
           cron: "0 5 * * *"
