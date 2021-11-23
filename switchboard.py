@@ -353,5 +353,35 @@ class TardisTests(GitTarget):
         os.chdir('../')
 
 
+class PoliastroTests(GitTarget):
+
+    @property
+    def name(self):
+        return "poliastro"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/poliastro/poliastro.git"
+
+    @property
+    def git_ref(self):
+        return git_latest_tag(self.clone_url)
+
+    @property
+    def conda_dependencies(self):
+        return ["-c conda-forge coverage hypothesis mypy>=0.740 "
+                "poliastro pip pytest>=3.2 pytest-cov<2.6.0 "
+                "pytest-doctestplus>=0.8 pytest-mpl pytest-mypy "
+                "pytest-remotedata"]
+
+    @property
+    def install_command(self):
+        return "conda remove --force poliastro && pip install -e ."
+
+    @property
+    def test_command(self):
+        return 'cd tests && pytest -m "not slow and not mpl_image_compare"'
+
+
 if __name__ == "__main__":
     main(NumbaSource())
