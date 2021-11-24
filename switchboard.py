@@ -331,7 +331,7 @@ class TardisTests(GitTarget):
 
     @property
     def install_command(self):
-        return "conda env update --file tardis_env3.yml && pip install -e ."
+        return "mamba env update --file tardis_env3.yml && pip install -e ."
 
     @property
     def test_command(self):
