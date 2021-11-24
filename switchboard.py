@@ -327,7 +327,7 @@ class TardisTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return ["-c conda-forge tardis-sn"]  # Install dependencies via YAML file
+        return ["-c conda-forge mamba"]  # Install dependencies via YAML file
 
     @property
     def install_command(self):
