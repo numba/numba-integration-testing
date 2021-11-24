@@ -327,11 +327,11 @@ class TardisTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return []  # Install dependencies via YAML file
+        return ["-c conda-forge mamba"]  # Install dependencies via YAML file
 
     @property
     def install_command(self):
-        return "conda env update --file tardis_env3.yml && pip install -e ."
+        return "mamba env update --file tardis_env3.yml && pip install -e ."
 
     @property
     def test_command(self):
