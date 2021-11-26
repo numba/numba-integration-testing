@@ -30,6 +30,7 @@ Tested Projects
 * `pygbm <https://github.com/ogrisel/pygbm>`_
 * `datashader <https://github.com/holoviz/datashader>`_
 * `tardis <https://github.com/tardis-sn/tardis>`_
+* `poliastro <https://github.com/poliastro/poliastro>`_
 
 Adding a new Target
 ===================
