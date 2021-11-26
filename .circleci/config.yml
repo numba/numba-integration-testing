@@ -74,6 +74,12 @@ jobs:
       - run-target:
           target: "tardis"
 
+  poliastro:
+    executor: test-executor
+    steps:
+      - run-target:
+          target: "poliastro"
+
 
 workflows:
   version: 2.1
@@ -88,6 +94,7 @@ workflows:
       - datashader
       - pandas
       - tardis
+      - poliastro
   nightly-integration-testing:
     jobs:
       - umap
@@ -99,6 +106,7 @@ workflows:
       - datashader
       - pandas
       - tardis
+      - poliastro
     triggers:
       - schedule:
           cron: "0 5 * * *"
