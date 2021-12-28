@@ -304,18 +304,18 @@ class PandasTests(CondaTarget):
 
 
 class TardisTests(GitTarget):
-    
+
     @property
     def name(self):
         return "tardis"
-    
+
     @property
     def clone_url(self):
         return "https://github.com/tardis-sn/tardis.git"
-    
+
     @property
     def git_ref(self):
-        # This pipeline runs git 2.1.4 and does not support `git describe --tags --abbrev=0` nor 
+        # This pipeline runs git 2.1.4 and does not support `git describe --tags --abbrev=0` nor
         # `git tag --sort=committerdate`, etc. Using the GitHub API to get the latest tag.
         import json
         from urllib.request import urlopen
@@ -381,6 +381,39 @@ class PoliastroTests(GitTarget):
     @property
     def test_command(self):
         return 'cd tests && pytest -m "not slow and not mpl_image_compare"'
+
+
+class NumbaDppyTarget(GitTarget):
+    @property
+    def name(self):
+        return "numba-dppy"
+
+    @property
+    def clone_url(self):
+        return "https://github.com/IntelPython/numba-dppy.git"
+
+    @property
+    def git_ref(self):
+        return "main"
+
+    @property
+    def conda_dependencies(self):
+        channels = "-c defaults -c numba -c intel -c numba/label/dev -c dppy/label/dev"
+        build = "gxx_linux-64 dpcpp_linux-64 python cython setuptools"
+        run_pin = "mkl=2021.3.0"
+        run = f"numba dpctl=0.12 dpnp=0.9.0dev0=*_58 {run_pin} spirv-tools"
+        # run = "numba dpctl dpnp spirv-tools"
+        test = "pytest pytest-cov"
+        packages = f"{build} {run} {test}"
+        return [f"{channels} {packages}"]
+
+    @property
+    def install_command(self):
+        return "python setup.py develop"
+
+    @property
+    def test_command(self):
+        return "pytest -q -ra --disable-warnings --pyargs numba_dppy -vv"
 
 
 if __name__ == "__main__":
