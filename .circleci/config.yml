@@ -73,12 +73,16 @@ jobs:
     steps:
       - run-target:
           target: "tardis"
-
   poliastro:
     executor: test-executor
     steps:
       - run-target:
           target: "poliastro"
+  numba-dppy:
+    executor: test-executor
+    steps:
+      - run-target:
+          target: "numba-dppy"
 
 
 workflows:
@@ -95,6 +99,7 @@ workflows:
       - pandas
       - tardis
       - poliastro
+      - numba-dppy
   nightly-integration-testing:
     jobs:
       - umap
@@ -107,6 +112,7 @@ workflows:
       - pandas
       - tardis
       - poliastro
+      - numba-dppy
     triggers:
       - schedule:
           cron: "0 5 * * *"
