@@ -383,33 +383,23 @@ class PoliastroTests(GitTarget):
         return 'cd tests && pytest -m "not slow and not mpl_image_compare"'
 
 
-class NumbaDppyTarget(GitTarget):
+class NumbaDppyTarget(CondaTarget):
     @property
     def name(self):
         return "numba-dppy"
 
     @property
-    def clone_url(self):
-        return "https://github.com/IntelPython/numba-dppy.git"
-
-    @property
-    def git_ref(self):
-        return "main"
+    def conda_package(self):
+        return "--update-specs intel::numba-dppy"
 
     @property
     def conda_dependencies(self):
-        channels = "-c defaults -c numba -c intel -c numba/label/dev -c dppy/label/dev"
-        build = "gxx_linux-64 dpcpp_linux-64 python cython setuptools"
-        run_pin = "mkl=2021.3.0"
-        run = f"numba dpctl=0.12 dpnp=0.9.0dev0=*_58 {run_pin} spirv-tools"
-        # run = "numba dpctl dpnp spirv-tools"
+        channels = "-c intel"
+        build = "dpcpp_linux-64 python"
+        run = "numba dpctl dpnp llvm-spirv spirv-tools"
         test = "pytest pytest-cov"
         packages = f"{build} {run} {test}"
         return [f"{channels} {packages}"]
-
-    @property
-    def install_command(self):
-        return "python setup.py develop"
 
     @property
     def test_command(self):
