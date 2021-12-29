@@ -406,11 +406,13 @@ class NumbaDppyTarget(GitTarget):
 
     @property
     def install_command(self):
-        return "python setup.py develop"
+        for_dpnp = "OCL_ICD_FILENAMES=libintelocl.so"
+        return f"{for_dpnp} python setup.py develop"
 
     @property
     def test_command(self):
-        return "pytest -q -ra --disable-warnings --pyargs numba_dppy -vv"
+        for_dpnp = "OCL_ICD_FILENAMES=libintelocl.so"
+        return f"{for_dpnp} pytest -q -ra --disable-warnings --pyargs numba_dppy -vv"
 
 
 if __name__ == "__main__":
