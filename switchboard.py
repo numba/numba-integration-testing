@@ -399,9 +399,9 @@ class NumbaDppyTarget(GitTarget):
     @property
     def conda_dependencies(self):
         return [
-            "-c intel python=3.9 dpcpp_linux-64 cython dpnp llvm-spirv spirv-tools",
+            "python=3.9 cython pytest pytest-cov",
+            "-c intel dpcpp_linux-64 dpnp llvm-spirv spirv-tools",
             "-c dppy/label/dev dpctl",
-            "pytest pytest-cov"
         ]
 
     @property
