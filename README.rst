@@ -31,6 +31,7 @@ Tested Projects
 * `datashader <https://github.com/holoviz/datashader>`_
 * `tardis <https://github.com/tardis-sn/tardis>`_
 * `poliastro <https://github.com/poliastro/poliastro>`_
+* `numba-dppy <https://github.com/IntelPython/numba-dppy>`_
 
 Adding a new Target
 ===================
