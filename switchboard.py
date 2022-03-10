@@ -237,19 +237,21 @@ class DatashaderTests(GitTarget):
 
     @property
     def clone_url(self):
-        return "https://github.com/holoviz/datashader.git"
+        #return "https://github.com/holoviz/datashader.git"
+        return "https://github.com/esc/datashader.git"
 
     @property
     def git_ref(self):
-        return "v" + str(sorted([parse(t)
-                   for t in git_ls_remote_tags(self.clone_url)])[-1])
+        #return "v" + str(sorted([parse(t)
+        #           for t in git_ls_remote_tags(self.clone_url)])[-1])
+        return "debug_skimage_import"
 
     @property
     def conda_dependencies(self):
-        return ["python bokeh<2.0 codecov colorcet dask[complete] "
-                "datashape fastparquet flake8 nbsmoke numpy pandas pandas "
+        return ["python bokeh codecov colorcet dask[complete] "
+                "datashape fastparquet flake8 nbsmoke numpy pandas "
                 "param pillow pyct[cmd] pytest pytest-benchmark pytest-cov "
-                "scikit-image scipy toolz xarray==0.16.2 netcdf4"]
+                "scikit-image scipy toolz xarray netcdf4"]
 
     @property
     def install_command(self):
@@ -257,7 +259,7 @@ class DatashaderTests(GitTarget):
 
     @property
     def test_command(self):
-        return "pytest datashader"
+        return "pytest -s datashader"
 
 
 class PandasTests(CondaTarget):
