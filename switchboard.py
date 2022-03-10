@@ -259,7 +259,7 @@ class DatashaderTests(GitTarget):
 
     @property
     def test_command(self):
-        return "pytest datashader"
+        return "pytest -s datashader"
 
 
 class PandasTests(CondaTarget):
