@@ -237,12 +237,14 @@ class DatashaderTests(GitTarget):
 
     @property
     def clone_url(self):
-        return "https://github.com/holoviz/datashader.git"
+        #return "https://github.com/holoviz/datashader.git"
+        return "https://github.com/esc/datashader.git"
 
     @property
     def git_ref(self):
-        return "v" + str(sorted([parse(t)
-                   for t in git_ls_remote_tags(self.clone_url)])[-1])
+        #return "v" + str(sorted([parse(t)
+        #           for t in git_ls_remote_tags(self.clone_url)])[-1])
+        return "debug_skimage_import"
 
     @property
     def conda_dependencies(self):
