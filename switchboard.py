@@ -77,11 +77,20 @@ class LibrosaTests(GitTarget):
 
     @property
     def install_command(self):
-        return "conda install -c conda-forge ffmpeg pysoundfile && pip install --pre -e .[tests]"
+        return "pip install --pre -e .[tests]"
 
     @property
     def test_command(self):
         return "pytest"
+
+    def install(self):
+        """Custom install function for librosa."""
+        if not os.path.exists(self.name):
+            self.clone()
+        os.chdir(self.name)
+        execute("conda run --no-capture-output -n {} {}".format(self.name, "conda install -c conda-forge ffmpeg pysoundfile"))
+        execute("conda run --no-capture-output -n {} {}".format(self.name, self.install_command))
+        os.chdir('../')
 
 
 class CliffordTests(GitTarget):
@@ -376,11 +385,26 @@ class PoliastroTests(GitTarget):
 
     @property
     def install_command(self):
-        return "conda remove --force poliastro && pip install -e ."
+        return "pip install -e ."
 
     @property
     def test_command(self):
-        return 'cd tests && pytest -m "not slow and not mpl_image_compare"'
+        return 'pytest -m "not slow and not mpl_image_compare"'
+
+    def install(self):
+        """Custom install function for poliastro."""
+        if not os.path.exists(self.name):
+            self.clone()
+        os.chdir(self.name)
+        execute("conda run --no-capture-output -n {} {}".format(self.name, "conda remove --force poliastro"))
+        execute("conda run --no-capture-output -n {} {}".format(self.name, self.install_command))
+        os.chdir('../')
+
+    def test(self):
+        """Custom test function for poliastro."""
+        os.chdir("{}/{}".format(self.name, "tests"))
+        execute("conda run --no-capture-output -n {} {}".format(self.name, self.test_command))
+        os.chdir('../../')
 
 
 class NumbaDppyTarget(GitTarget):
