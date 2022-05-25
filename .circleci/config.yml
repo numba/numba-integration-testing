@@ -71,6 +71,7 @@ jobs:
   tardis:
     executor: test-executor
     steps:
+      - run: pip install pyyaml
       - run-target:
           target: "tardis"
   poliastro:

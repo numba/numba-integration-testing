@@ -327,31 +327,31 @@ class TardisTests(GitTarget):
 
     @property
     def conda_dependencies(self):
-        return []  # Install dependencies via YAML file
+        import yaml
+        from urllib.request import urlopen
+
+        url = "https://raw.githubusercontent.com/tardis-sn/tardis/master/tardis_env3.yml"
+        response = urlopen(url)
+        config = yaml.load(response, Loader=yaml.CLoader)
+        conda_deps = " ".join(["-c", "conda-forge"] + config["dependencies"])
+
+        return [conda_deps]
 
     @property
     def install_command(self):
-        return "conda env update --file tardis_env3.yml && pip install -e ."
+        return "pip install -e ."
 
     @property
     def test_command(self):
         return "pytest tardis --tardis-refdata=/home/circleci/repo/tardis/tardis-refdata"
 
     def test(self):
-        """ Custom test function for TARDIS. """
+        """Custom test function for TARDIS."""
         os.chdir(self.name)
-
-        # Download reference data
-        ref_data_files = ["atom_data/kurucz_cd23_chianti_H_He.h5", "atom_data/chianti_He.h5",
-                          "unit_test_data.h5", "packet_unittest.h5", "montecarlo_1e5_compare_data.h5"]
-
-        execute("mkdir -p tardis-refdata/atom_data")
-        for fname in ref_data_files:
-            execute(f"wget 'https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path={fname}&resolveLfs=true' -O tardis-refdata/{fname}")
-
+        os.environ["GITHUB_WORKSPACE"] = "."
+        execute("bash .ci-helpers/download_reference_data.sh")
         execute("conda run --no-capture-output -n {} {}".format(self.name, self.test_command))
         os.chdir('../')
-
 
 class PoliastroTests(GitTarget):
 
