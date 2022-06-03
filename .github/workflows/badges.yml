@@ -1,0 +1,36 @@
+# Log in to jsonbin.org with tardis-bot GitHub account to get an API key and 
+# store it as a repository secret.
+
+# Updated badges will be available at:
+# https://img.shields.io/endpoint?url=https://jsonbin.org/numba/numba-integration-testing/nightly/<package>/badge
+
+name: badges
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+
+  workflow_dispatch:  # trigger manually
+
+env:
+  GH_API_URL: https://api.github.com/repos/numba/numba-integration-testing/statuses/master
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  JB_ENDPOINT: https://jsonbin.org/numba/numba-integration-testing/nightly
+  JB_TOKEN: ${{ secrets.JSONBIN_APIKEY }}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
+
+      - name: Install packages
+        run: pip install requests==2.27.1 parse==1.19.0
+
+      - name: Update badges
+        run: python .ci-helpers/badges.py
