@@ -96,7 +96,10 @@ class CliffordTests(GitTarget):
 
     @property
     def git_ref(self):
-        return(git_ls_remote_tags(self.clone_url)[-1])
+        # clifford has dev tags, we ignore those by assuming they contain the
+        # string 'dev'.
+        return([t for t in git_ls_remote_tags(self.clone_url)
+                if 'dev' not in t][-1])
 
     @property
     def conda_dependencies(self):
